@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.branco {
+    background-color: white;
+}
+
 .citacao {
     font-size: 3em;
     margin-left: 15vw;
@@ -46,7 +50,7 @@
 
 .lista {
     width: 100vw;
-    height: 20vh;
+    height: 10vh;
     font-size: 2em;
     display: flex;
 }
@@ -97,7 +101,7 @@
 }
 
 .principal {
-    height: 55vh;
+    height: 65vh;
     display: flex;
     margin-top: 5vh;
 }

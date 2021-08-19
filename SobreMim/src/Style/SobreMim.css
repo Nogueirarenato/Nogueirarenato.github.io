@@ -1,0 +1,24 @@
+
+table{
+    margin:1%;
+    background-color: rgb(222, 229, 248);
+    text-align: center;
+}
+
+table td{
+    padding: 0.5%;
+    
+}
+
+
+td{
+    min-width: 19vw;
+}
+
+.left{
+    text-align: left;
+}
+
+.td_menor{
+    min-width: 10vw;
+}

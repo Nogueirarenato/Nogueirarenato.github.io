@@ -35,6 +35,7 @@
     display: flex;
     padding-top: 4vh;
     padding-left: 3vw;
+    
 }
 
 .footer-size {
@@ -101,7 +102,7 @@
 }
 
 .principal {
-    height: 65vh;
+    min-height: 60vh;
     display: flex;
     margin-top: 5vh;
 }

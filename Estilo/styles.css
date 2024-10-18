@@ -1,0 +1,91 @@
+/* Estilo geral */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: black;
+    color: white;
+}
+
+/* Estilo do menu */
+header {
+    background-color: black;
+    padding: 10px 0;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo da seção principal */
+section#home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh; /* Define que a seção principal ocupará 70% da altura da tela */
+}
+
+.content {
+    display: flex;
+    align-items: center;
+}
+
+.foto-pessoal {
+    border-radius: 50%;
+    width: 10vw; /* 10% da largura da tela */
+    height: auto;
+    margin-right: 20px;
+}
+
+/* Estilo da mensagem */
+.mensagem p {
+    margin: 5px 0;
+}
+
+/* Estilo do rodapé */
+footer {
+    background-color: white;
+    color: black;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 30vh; /* Define que o rodapé ocupará 30% da altura da tela */
+}
+
+.footer-coluna {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 1px solid black;
+    flex: 1;
+}
+
+.footer-coluna:first-child {
+    border-left: none;
+}
+
+footer h3 {
+    margin: 0;
+}

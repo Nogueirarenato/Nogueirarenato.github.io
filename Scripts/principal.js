@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     const ceu = document.getElementById('ceu');
-    const totalEstrelas = 5000; 
+    const totalEstrelas = 1000; 
 
     for (let i = 0; i < totalEstrelas; i++) {
         let estrela = document.createElement('div');

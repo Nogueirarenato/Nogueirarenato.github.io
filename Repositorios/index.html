@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../Estilo/estilo2.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Estilo/estilo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
 
 
     <title>Renato Nogueira</title>
@@ -17,23 +18,57 @@
 
 <body>
 
-    <div class="preto">
-        <div class="lista lista-size">
+    <div class="preto" id="ceu">
+        <canvas id="sky"></canvas>
+        <div class="lista">
             <!--  Início do Menu de Opções -->
             <ul>
                 <li><a href="../index.html"> Home</a></li>
-                <li><a href="../SobreMim/index.html"> Sobre Mim</a></li>
-                <li><a href="../Projetos/index.html"> Projetos</a></li>
-                <li><a href="../Artigos/index.html"> Artigos</a></li>
-                <li><a href="#"> Repositórios</a></li>
-                <li><a href="../Blog/index.html"> Blog</a></li>
+                <li><a href="/index.html"> Sobre Mim</a></li>
+                <li><a href="./Repositorios/index.html"> Repositórios</a></li>
+
             </ul>
         </div>
+        <!-- Fim do Menu de Opções -->
+
+        <div class="principal principal-size">
+            <div class="container-repo">
+                <h2>Projetos</h2>
+        <ul>
+            <li>
+                <a href="https://github.com/Nogueirarenato/projetoIntegrador1" target="_blank">Projeto Integrador I - Desperdício Zero</a> -
+                <a href="https://www.youtube.com/watch?v=8jzBFmhKEIg" target="_blank">Vídeo</a>
+            </li>
+            <li>
+                <a href="https://github.com/Nogueirarenato/Projeto_Integrador_II" target="_blank">Projeto Integrador II - ZGR – Zabbix Graphics Reports</a> -
+                <a href="https://www.youtube.com/watch?v=8TsVFJbvDs0" target="_blank">Vídeo</a>
+            </li>
+            <li>
+                <a href="https://github.com/Nogueirarenato/ProjetoIntegradorIII" target="_blank">Projeto Integrador III - Quadro Digital – Sistema de Localização de Trens e Veículos Ferroviários    </a> -
+                <a href="https://www.youtube.com/watch?v=dtdNNjlA7Ro" target="_blank">Vídeo</a>
+            </li>
+            <li>
+                <a href="https://github.com/Nogueirarenato/ProjetoIntegradorIV" target="_blank">Projeto Integrador IV -  Framework Web de Informação de Disponibilidade de Vagas em Centro de Acolhimento</a> -
+                <a href="https://www.youtube.com/watch?v=Xi02Y8I_0Bs" target="_blank">Vídeo</a>
+            </li>
+            <li>
+                <a href="https://github.com/Nogueirarenato/Projeto-Integrador-em-Computacao-V" target="_blank">Projeto Integrador V -Dispositivo IOT para Monitoramento Remoto do Consumo de Energia Elétrica</a> -
+                <a href="https://www.youtube.com/watch?v=0bHDx5SxAnI" target="_blank">Vídeo</a>
+            </li>
+            <li>
+                <a href="https://github.com/Nogueirarenato/Projeto-Integrador-em-Computacao-VI" target="_blank">Projeto Integrador VI - Alimentador Inteligente: Soluções Automatizadas para o Bem-Estar Animal</a> -
+                <a href="https://www.youtube.com/watch?v=MIZvxHQfTtU" target="_blank">Vídeo</a>
+            </li>
+            <li>
+                <a href="https://github.com/Nogueirarenato/Trabalho-de-Conclusao-de-Curso-em-Engenharia-da-Computacao" target="_blank">TCC - Dispositivo IOT para Auxiliar na Medicação</a> -
+                <a href="https://www.youtube.com/watch?v=7bdLO1kJEcI" target="_blank">Vídeo</a>
+            </li>
+        </ul>
+            </div>
+
+            </div>
+        </div>
     </div>
-
-    <!-- Fim do Menu de Opções -->
-
-    <div class="principal branco">Repositórios</div>
 
     <footer class="footer-size">
         <div class="footer">
@@ -51,9 +86,9 @@
             </div>
             <div class="rodape">
                 <h3>Redes Sociais</h3>
-                <p><a href="https://github.com/Nogueirarenato">GitHub</a></p>
-                <p><a href="https://www.linkedin.com/in/renato-nogueira-801a6a17b/">Linkedin</a></p>
-                <p><a href="https://www.facebook.com/renato.nogueira.14606936/">Facebook</a></p>
+                <p><a target="_blank" href="https://github.com/Nogueirarenato">GitHub</a></p>
+                <p><a target="_blank" href="https://www.linkedin.com/in/renato-nogueira-b5020131a/">Linkedin</a></p>
+                <p><a target="_blank" href="https://www.facebook.com/renato.nogueira.56027">Facebook</a></p>
             </div>
         </div>
         <div class="devfor">Desenvolvido Por Renato Nogueira 2020 - <span id="data-atual"></span></div>
@@ -62,7 +97,5 @@
 
 </body>
 <script src="../Scripts/principal.js"></script>
-
-</body>
 
 </html>

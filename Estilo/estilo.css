@@ -7,8 +7,29 @@
 
 /* céu estrelado */
 
+.bio{
+    width: 70%;
+    
+    overflow-y: auto;
+    flex: 1;
+    font-size: 1.5em;
+    margin: 4%;
+    margin-top: 0;
+    text-align: justify;
+    text-indent: 5%; /* Tamanho do recuo */
+}
 
-
+.container-repo {
+    width: 90%; /* Mantém a margem de 5% de cada lado */
+    background-color: rgba(255, 255, 255, 0.7); /* Fundo branco com 70% de transparência */
+    padding: 20px;
+    border-radius: 15px; /* Cantos arredondados */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Sombras para dar profundidade */
+    text-align: center;
+    margin: 5%; /* Margem de 5% em torno do container */
+    margin-bottom: 3%;
+    margin-top: -1%;
+}
 
     #ceu {
         background-color: black;
@@ -95,14 +116,14 @@
 
 .lista {
     width: 100vw;
-    height: 15 vh;
+   
     font-size: 2em;
     display: flex;
 }
 
 .lista ul {
     display: flex;
-    margin-top: 3vh;
+    margin-top: -15vh;
     margin-left: 1vh;
 }
 
@@ -148,7 +169,7 @@
 .principal {
     height: 60vh;
     display: flex;
-    margin-top: 5vh;
+   
 }
 
 .reduzir {
@@ -181,6 +202,34 @@
     text-decoration: none;
 }
 
+.container-repo h2 {
+    margin-bottom: 20px;
+    font-size: 3em;
+    color: black;
+}
+
+.container-repo ul {
+    list-style-type: none;
+    font-size: 2em;
+    text-align: left;
+    text-align: center;
+}
+
+.container-repo ul li {
+    margin: 10px 0;
+}
+
+.container-repo ul li a {
+    text-decoration: none;
+    color: #030e19; /* Cor dos links */
+}
+
+.container-repo ul li a:hover {
+    color: #eef11a; /* Cor dos links ao passar o mouse */
+}
+
+
+
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -189,7 +238,15 @@
     padding-right: 10%;
     transform: translateX(-20%);
 }
+.principal {
+    flex-direction: column; /* A .bio fica abaixo da foto */
+    align-items: center;    /* Centraliza o conteúdo */
+}
 
+.bio {
+    width: 100%; /* Ocupará toda a largura em telas pequenas */
+    margin-top: 20px; /* Adiciona espaçamento entre a foto e a bio */
+}
 
     .citacao {
         font-size: 1.8em;

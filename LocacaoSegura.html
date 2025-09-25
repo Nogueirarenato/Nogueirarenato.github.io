@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Aluguéis de Temporada - Proprietários</title>
+<style>
+  :root{
+    --glass-bg: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.12);
+    --accent: #00c851;
+    --card-width: 240px;
+    --fw-regular: 400;
+    --fw-bold: 700;
+    --max-width: 1200px;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #eef6ff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    background: radial-gradient(ellipse at top left, rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+  }
+
+  /* fundo com a imagem enviada (coloque o arquivo na mesma pasta) */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image: url('1.jpeg');
+   background-size: contain;  
+    background-position: center;
+    filter: blur(3px) brightness(0.6);
+    z-index:-2;
+  }
+
+  /* overlay de cor suave */
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
+    z-index:-1;
+  }
+
+  .container{
+    max-width: var(--max-width);
+    margin: 40px auto;
+    padding: 28px;
+    box-sizing: border-box;
+  }
+
+  header{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+
+  .brand{
+    display:flex;
+    gap:16px;
+    align-items:center;
+  }
+
+  .logo{
+    width:64px;
+    height:64px;
+    border-radius:12px;
+    background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+    border:1px solid var(--glass-border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:18px;
+    color:var(--accent);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+
+  h1{
+    margin:0;
+    font-size:20px;
+    letter-spacing:0.2px;
+    font-weight:700;
+  }
+  p.lead{
+    margin:0;
+    font-size:13px;
+    opacity:0.9;
+  }
+
+  /* filtros */
+  .controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .select, .search{
+    background:var(--glass-bg);
+    border:1px solid var(--glass-border);
+    padding:10px 12px;
+    border-radius:10px;
+    color:yellow;
+    background-color: black;
+    backdrop-filter: blur(6px) saturate(120%);
+  }
+  .search input{
+    border:0;
+    outline:0;
+    background:transparent;
+    color:inherit;
+    width:200px;
+  }
+
+  main{
+    margin-top:18px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    gap:16px;
+    align-items:start;
+  }
+
+  /* card */
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid var(--glass-border);
+    padding:12px;
+    border-radius:14px;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    transition: transform .22s ease, box-shadow .22s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.36);
+  }
+  .card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(0,0,0,0.6);
+  }
+
+  .avatar{
+    min-width:72px;
+    min-height:72px;
+    width:72px;
+    height:72px;
+    border-radius:12px;
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,0.06);
+    flex-shrink:0;
+    background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    display:block;
+  }
+  .info{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .name{
+    font-weight:700;
+    font-size:15px;
+    margin:0;
+  }
+  .meta{
+    font-size:13px;
+    margin:0;
+    opacity:0.95;
+  }
+  .desc{
+    font-size:13px;
+    opacity:0.85;
+    margin:6px 0 0 0;
+  }
+  .wa-btn{
+    margin-top:auto;
+    align-self:flex-start;
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    padding:8px 10px;
+    border-radius:10px;
+    text-decoration:none;
+    background: linear-gradient(90deg, rgba(0,0,0,0.18), rgba(0,0,0,0.08));
+    border:1px solid rgba(255,255,255,0.04);
+    color:#097e32;
+    font-weight:700;
+    font-size:13px;
+    transition: transform .16s ease;
+  }
+  .wa-btn:hover{ transform: translateY(-3px); filter:brightness(1.05);}
+
+  /* badge region */
+  .badge{
+    padding:6px 8px;
+    font-size:12px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.04);
+    color: #fff;
+  }
+
+  /* modal simples para ver detalhes */
+  .modal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: rgba(0,0,0,0.55);
+    z-index:40;
+    visibility:hidden;
+    opacity:0;
+    transition:opacity .18s ease, visibility .18s ease;
+  }
+  .modal.show{ visibility:visible; opacity:1;}
+  .modal-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:18px;
+    border:1px solid var(--glass-border);
+    width: min(720px, 94%);
+    color: #eef9ff;
+  }
+  .modal-card header{ display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .close{
+    background:transparent;
+    border:0;
+    color:inherit;
+    font-size:20px;
+    cursor:pointer;
+    opacity:0.85;
+  }
+
+  /* responsividade adicional */
+  @media (max-width:560px){
+    .brand h1{ font-size:16px; }
+    .badge{ display:none; }
+    .search input{ width:120px; }
+  }
+
+  footer{
+    margin-top:22px;
+    text-align:center;
+    font-size:13px;
+    opacity:0.9;
+  }
+
+  /* pequena animação de botão flotante para contato geral */
+  .float-wa{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:60;
+    display:inline-flex;
+    gap:10px;
+    align-items:center;
+    padding:12px 14px;
+    border-radius:999px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.2), rgba(0,0,0,0.08));
+    border:1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    color: #fff;
+    text-decoration:none;
+  }
+
+  /* small helper */
+  .muted{ opacity:0.85; font-size:13px; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">⛱️</div>
+        <div>
+          <h1>Aluguéis de Temporada — Contatos dos Proprietários</h1>
+          <p class="lead">Negocie somente com os nossos proprietários. Clique na imagem do proprietário para abrir o WhatsApp.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search">
+          <label class="muted" for="query">Buscar:</label>
+          <input id="query" placeholder="nome, praia ou região" />
+        </div>
+
+        <select id="regionFilter" class="select" title="Filtrar por região">
+          <option value="all">Todas as Regiões</option>
+          <option value="lado sul">Praias Lado Sul</option>
+          <option value="lado norte">Praias Lado Norte</option>
+          <option value="região central">Região Central</option>
+          <option value="centro">Centro</option>
+        </select>
+      </div>
+    </header>
+
+    <main>
+      <div id="grid" class="grid" aria-live="polite"></div>
+
+      <footer>
+        <div class="muted">Fique à vontade para chamar nossos proprietários. Todos os contatos são direcionados para os números fornecidos.</div>
+      </footer>
+    </main>
+  </div>
+
+  <a class="float-wa" href="https://wa.me/5511995299627" target="_blank" rel="noopener">
+    <strong>Contato rápido: Gilberto</strong>
+    <span style="opacity:0.85">→</span>
+  </a>
+
+  <!-- modal -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true" >
+    <div class="modal-card" role="document" style="background-color: white; color:black">
+      <header>
+        <div>
+          <h3 id="modalName" style="margin:0"></h3>
+          <div id="modalMeta" class="muted" style="margin-top:6px"></div>
+        </div>
+        <button class="close" id="modalClose" aria-label="Fechar">&times;</button>
+      </header>
+      <div id="modalBody" style="margin-top:12px; font-size:14px; line-height:1.45;"></div>
+      <div style="margin-top:12px; display:flex; gap:8px; align-items:center">
+        <a id="modalWa" class="wa-btn" href="#" target="_blank" rel="noopener">Abrir no WhatsApp</a>
+        <button id="modalCopy" class="wa-btn" style="border:1px solid rgba(255,255,255,0.06)">Copiar número</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/*
+  Dados extraídos do texto que você enviou.
+  Cada item: name, phone (digits only), location, description, region.
+*/
+const contacts = [
+  { name: "Cleudete", phone: "5511967071238", location: "Praia do Sapê (Lado Sul)", desc: "3 sobrados até 10 pessoas cada, 150m do mar.", region: "lado sul" },
+  { name: "Ana Paula de Moraes", phone: "5512991785553", location: "Lázaro (Lado Sul)", desc: "Casa até 15 pessoas, com piscina.", region: "lado sul" },
+  { name: "Gilberto", phone: "5511995299627", location: "Maranduba / Peruíbe-SP", desc: "Apê 8 pessoas com piscina. Também disponível casa para 18 pessoas com piscina.", region: "região central" },
+  { name: "Fátima", phone: "5511999799410", location: "Maranduba", desc: "Casa 5 pessoas, 800m do mar, com churrasqueira.", region: "lado sul" },
+  { name: "Willa", phone: "5512996590106", location: "Centro", desc: "Apê para 6 pessoas com piscina. Casa para 10 pessoas com churrasqueira.", region: "centro" },
+  { name: "Tati (Centro)", phone: "5512997930728", location: "Centro", desc: "Apê 6 pessoas, com piscina e área gourmet.", region: "centro" },
+  { name: "Cledson", phone: "5512992073033", location: "Estufa II", desc: "Casa 11 pessoas com ar nos quartos, churrasqueira e 2 vagas.", region: "lado sul" },
+  { name: "Patrícia", phone: "5512992181136", location: "Estufa II", desc: "Casa 12 pessoas, ar nos quartos, churrasqueira e 2 vagas.", region: "lado sul" },
+  { name: "Talita (Estufa II)", phone: "5512996097715", location: "Estufa II / Praia Grande", desc: "Casa 10 pessoas, churrasqueira, 2 vagas, 2 km da praia, pet friendly.", region: "lado sul" },
+  { name: "Sílvia", phone: "5512997240220", location: "Mato Dentro", desc: "Casa até 10 pessoas, à 50m da Rod. Osvaldo Cruz.", region: "lado sul" },
+  { name: "Lilian", phone: "5512997020288", location: "Jardim Samambaia", desc: "Casa litoral para família, 12 pessoas, com piscina.", region: "lado sul" },
+  { name: "Lalá", phone: "5512996095842", location: "Perequê-Açu (Lado Norte)", desc: "Chalé Arte para até 7 pessoas.", region: "lado norte" },
+  { name: "Tetê Belo", phone: "5512996485768", location: "Perequê-Açu", desc: "Casa pé na areia até 8 pessoas (não aceita pet).", region: "lado norte" },
+  { name: "Edna", phone: "5512997011467", location: "Perequê-Açu", desc: "Casa 5 pessoas com churrasqueira (600m da praia). Casa 7 pessoas com churrasqueira (600m).", region: "lado norte" },
+  { name: "Larissa", phone: "5512997485077", location: "Perequê-Açu / Puruba", desc: "Casa 12 pessoas. Também chácara com piscina até 10 pessoas (Puruba).", region: "lado norte" },
+  { name: "Otávio", phone: "5512991287044", location: "Taquaral (Lado Norte)", desc: "Chalé ecológico para até 6 pessoas com churrasqueira.", region: "lado norte" },
+  { name: "Marli", phone: "5516997944888", location: "Itaguá", desc: "Casa até 7 pessoas.", region: "região central" },
+  { name: "Talita (Praia Grande)", phone: "5512996097715", location: "Praia Grande", desc: "Casa para 15 pessoas.", region: "região central" },
+  { name: "Nermano", phone: "5519971236500", location: "Praia Grande", desc: "Casa 12 pessoas, 150m da praia, churrasqueira, ar-condicionado.", region: "região central" },
+  { name: "Neide", phone: "5516997559130", location: "Praia Grande", desc: "Apê 8 pessoas, 300m do mar.", region: "região central" },
+  { name: "Joly", phone: "551999624082", location: "Praia Grande", desc: "Apto alto padrão.", region: "região central" },
+];
+
+/* Util: gera um SVG simples como data URL que funciona como "imagem" do proprietário.
+   Cada imagem terá o nome e um ícone tipo WhatsApp.
+*/
+function makeContactSVG(name){
+  const initials = name.split(' ').map(p=>p[0]).slice(0,2).join('').toUpperCase();
+  const svg = `
+  <svg xmlns='http://www.w3.org/2000/svg' width='400' height='220' viewBox='0 0 400 220'>
+    <defs>
+      <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
+        <stop offset='0' stop-color='#0f7f4a' stop-opacity='0.95'/>
+        <stop offset='1' stop-color='#00bfa5' stop-opacity='0.95'/>
+      </linearGradient>
+    </defs>
+    <rect rx='18' ry='18' width='100%' height='100%' fill='rgba(255,255,255,0.03)' />
+    <rect x='12' y='12' rx='12' ry='12' width='140' height='140' fill='url(#g)' opacity='0.95' />
+    <text x='82' y='96' font-family='Inter, Arial, sans-serif' font-size='48' fill='white' text-anchor='middle' alignment-baseline='middle' font-weight='700'>${initials}</text>
+
+    <g transform='translate(170,40)'>
+      <text x='0' y='28' font-family='Inter, Arial, sans-serif' font-size='22' fill='white' font-weight='700'>${escapeXML(name)}</text>
+      <rect x='0' y='40' width='220' height='1' fill='rgba(255,255,255,0.09)'/>
+      <text x='0' y='80' font-family='Inter, Arial, sans-serif' font-size='14' fill='rgba(255,255,255,0.85)'>Clique para abrir no WhatsApp</text>
+      <g transform='translate(0,100)'>
+        <circle cx='12' cy='12' r='12' fill='#25D366'/>
+        <path d='M8 12c0-2 2-3 4-3s4 1 4 3-2 3-4 3-4-1-4-3z' fill='white' opacity='0.95'/>
+      </g>
+    </g>
+  </svg>
+  `.trim();
+
+  return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+}
+
+function escapeXML(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// render grid
+const grid = document.getElementById('grid');
+
+function render(items){
+  grid.innerHTML = '';
+  if(!items.length){
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:20px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04)">Nenhum contato encontrado.</div>`;
+    return;
+  }
+  items.forEach(c=>{
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.innerHTML = `
+      <a class="avatar" href="https://wa.me/${c.phone}" target="_blank" rel="noopener" title="Abrir WhatsApp: ${c.name}">
+       
+      </a>
+      <div class="info">
+        <h4 class="name">${c.name}</h4>
+        <div class="meta">${c.location} <span style="margin-left:8px" class="badge">${c.region}</span></div>
+        <div class="desc">${c.desc}</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <a class="wa-btn" href="https://wa.me/${c.phone}" target="_blank" rel="noopener"> <img src="2.png" alt="Contato ${c.name}" width="72" height="72" style="width:100%;height:100%;object-fit:cover;display:block" loading="lazy"></a>
+          <button class="wa-btn" data-phone="${c.phone}" data-name="${c.name}">Detalhes</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+render(contacts);
+
+// filtros
+const regionFilter = document.getElementById('regionFilter');
+const query = document.getElementById('query');
+
+function applyFilters(){
+  const reg = regionFilter.value.toLowerCase();
+  const q = query.value.trim().toLowerCase();
+  const filtered = contacts.filter(c=>{
+    const matchRegion = (reg === 'all') || c.region.toLowerCase().includes(reg);
+    const matchQuery = !q || (c.name + ' ' + c.location + ' ' + c.desc).toLowerCase().includes(q);
+    return matchRegion && matchQuery;
+  });
+  render(filtered);
+}
+
+regionFilter.addEventListener('change', applyFilters);
+query.addEventListener('input', () => { setTimeout(applyFilters, 120); });
+
+// modal logic
+const modal = document.getElementById('modal');
+const modalClose = document.getElementById('modalClose');
+const modalName = document.getElementById('modalName');
+const modalMeta = document.getElementById('modalMeta');
+const modalBody = document.getElementById('modalBody');
+const modalWa = document.getElementById('modalWa');
+const modalCopy = document.getElementById('modalCopy');
+
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('button[data-phone]');
+  if(btn){
+    const phone = btn.dataset.phone;
+    const name = btn.dataset.name;
+    const contact = contacts.find(x => x.phone === phone);
+    if(contact){
+      modalName.textContent = contact.name;
+      modalMeta.textContent = contact.location + ' — ' + contact.region;
+      modalBody.innerHTML = `<strong>Descrição:</strong> ${contact.desc}<br><strong>Telefone (WhatsApp):</strong> ${formatPhone(contact.phone)}`;
+      modalWa.href = `https://wa.me/${contact.phone}`;
+      modalCopy.dataset.phone = contact.phone;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+    }
+  }
+});
+
+modalClose.addEventListener('click', ()=>{ closeModal(); });
+modal.addEventListener('click', (ev)=>{ if(ev.target === modal) closeModal(); });
+
+function closeModal(){
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden','true');
+}
+
+modalCopy.addEventListener('click', (e)=>{
+  const phone = e.target.dataset.phone || e.target.getAttribute('data-phone');
+  if(!phone) return;
+  navigator.clipboard?.writeText('+'+phone).then(()=>{
+    modalCopy.textContent = 'Copiado!';
+    setTimeout(()=> modalCopy.textContent = 'Copiar número', 1200);
+  }).catch(()=> {
+    alert('Não foi possível copiar. Número: ' + phone);
+  });
+});
+
+function formatPhone(raw){
+  // ex: 5511995299627 -> +55 11 995299627
+  const s = raw.replace(/\D/g,'');
+  if(s.length >= 11){
+    return '+' + s;
+  }
+  return s;
+}
+
+// acessibilidade: fechar com esc
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') closeModal();
+});
+
+// Inicial: rolar para a grid (útil em mobile)
+window.onload = ()=>{ document.querySelector('.container').scrollIntoView({behavior:'smooth'}); };
+</script>
+</body>
+</html>

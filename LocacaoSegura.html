@@ -21,7 +21,7 @@
     color: #eef6ff;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    background: radial-gradient(ellipse at top left, rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+   
   }
 
   /* fundo com a imagem enviada (coloque o arquivo na mesma pasta) */
@@ -29,10 +29,10 @@
     content:"";
     position:fixed;
     inset:0;
-    background-image: url('1.jpeg');
-   background-size: contain;  
+    background-image: url('3.png');
+   background-size: cover;  
     background-position: center;
-    filter: blur(3px) brightness(0.6);
+    filter: blur(3px) brightness(1);
     z-index:-2;
   }
 
@@ -41,7 +41,7 @@
     content:"";
     position:fixed;
     inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
+   
     z-index:-1;
   }
 
@@ -87,11 +87,13 @@
     font-size:20px;
     letter-spacing:0.2px;
     font-weight:700;
+    color:black;
   }
   p.lead{
     margin:0;
     font-size:13px;
     opacity:0.9;
+    color: black;
   }
 
   /* filtros */

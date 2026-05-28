@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urna Eletrônica - Grêmio Estudantil</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#d7d7d7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.urna{
+    width:990px;
+    background:#ececec;
+    border-radius:12px;
+    padding:25px;
+    display:flex;
+    gap:20px;
+    box-shadow:0 0 25px rgba(0,0,0,0.35);
+}
+
+.tela{
+    flex:1;
+    background:white;
+    border:3px solid #999;
+    padding:20px;
+    position:relative;
+}
+
+.teclado{
+    width:340px;
+    background:#2d2d2d;
+    border-radius:10px;
+    padding:20px;
+}
+
+.titulo{
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.numero-area{
+    margin-top:20px;
+}
+
+.numero-box{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.numero{
+    width:65px;
+    height:75px;
+    border:2px solid black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+    background:white;
+}
+
+.dados{
+    margin-top:70px;
+    font-size:24px;
+    line-height:1.8;
+}
+
+.foto{
+    
+    position:absolute;
+    top:60px;
+    right:20px;
+    width:180px;
+    border:2px solid #444;
+    background:white;
+    text-align:center;
+}
+
+.foto img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.foto p{
+    background:#eee;
+    padding:6px;
+    font-weight:bold;
+}
+
+.aviso{
+    margin-top:40px;
+    border-top:2px solid black;
+    padding-top:15px;
+    font-size:18px;
+}
+
+.teclas{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.botao{
+    height:72px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:30px;
+    background:#111;
+    color:white;
+    box-shadow:0 4px 0 #000;
+}
+
+.botao:active{
+    transform:translateY(3px);
+    box-shadow:0 1px 0 #000;
+}
+
+.acoes{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.branco{
+    background:white;
+    color:black;
+    font-size:18px;
+}
+
+.corrige{
+    background:#f09046;
+    font-size:18px;
+}
+
+.confirma{
+    background:#48c079;
+    font-size:18px;
+    height:80px;
+}
+
+.admin-link{
+    position:absolute;
+    bottom:5px;
+    right:10px;
+    font-size:10px;
+    color:#999;
+    text-decoration:none;
+}
+
+.admin-link:hover{
+    color:#555;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-content{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:400px;
+    max-height:80vh;
+    overflow:auto;
+}
+
+.modal-content h2{
+    margin-bottom:20px;
+}
+
+.resultado{
+    background:#f2f2f2;
+    padding:10px;
+    border-radius:5px;
+    margin-bottom:10px;
+}
+
+.admin-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.admin-buttons button{
+    flex:1;
+    padding:10px;
+    cursor:pointer;
+}
+
+.mensagem{
+    font-size:38px;
+    text-align:center;
+    margin-top:120px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="urna">
+
+    <div class="tela">
+
+        <div class="titulo">
+            JUSTIÇA ELEITORAL
+        </div>
+
+        <div id="conteudo">
+
+            <h2>Seu voto para</h2>
+
+            <div class="numero-area">
+
+                <p>Número:</p>
+
+                <div class="numero-box">
+                    <div class="numero" id="n1"></div>
+                    <div class="numero" id="n2"></div>
+                </div>
+
+            </div>
+
+            <div class="dados">
+                <p><strong>Chapa:</strong> <span id="chapa">...</span></p>
+            </div>
+
+            <div class="foto">
+                <img id="foto" src="" alt="">
+              
+            </div>
+
+            <div class="aviso">
+                Aperte a tecla:<br><br>
+                CONFIRMA para CONFIRMAR este voto<br>
+                CORRIGE para REINICIAR este voto
+            </div>
+
+        </div>
+
+        <a href="#" class="admin-link" onclick="abrirAdmin()">
+            administração
+        </a>
+
+    </div>
+
+    <div class="teclado">
+
+        <div class="teclas">
+
+            <button class="botao" onclick="digitar('1')">1</button>
+            <button class="botao" onclick="digitar('2')">2</button>
+            <button class="botao" onclick="digitar('3')">3</button>
+
+            <button class="botao" onclick="digitar('4')">4</button>
+            <button class="botao" onclick="digitar('5')">5</button>
+            <button class="botao" onclick="digitar('6')">6</button>
+
+            <button class="botao" onclick="digitar('7')">7</button>
+            <button class="botao" onclick="digitar('8')">8</button>
+            <button class="botao" onclick="digitar('9')">9</button>
+
+            <button class="botao" onclick="digitar('0')">0</button>
+
+        </div>
+
+        <div class="acoes">
+
+            <button class="botao branco" onclick="votarBranco()">
+                BRANCO
+            </button>
+
+            <button class="botao corrige" onclick="corrigir()">
+                CORRIGE
+            </button>
+
+            <button class="botao confirma" onclick="confirmar()">
+                CONFIRMA
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal" id="modalAdmin">
+
+    <div class="modal-content">
+
+        <h2>Painel Administrativo</h2>
+
+        <div id="resultadoVotos"></div>
+
+        <div class="admin-buttons">
+
+            <button onclick="zerarUrna()">
+                Zerar Urna
+            </button>
+
+            <button onclick="fecharAdmin()">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const audioConfirmacao = new Audio("som/urna.mp3");
+
+let candidatos = [];
+let numeroDigitado = "";
+
+// ==========================
+// CARREGAR CSV
+// ==========================
+
+async function carregarCandidatos(){
+
+    try{
+
+        const response = await fetch("candidatos.csv");
+        const texto = await response.text();
+
+        const linhas = texto.trim().split("\n");
+
+        candidatos = linhas.map(linha => {
+
+            const [numero, chapa] = linha.split(",");
+
+            return {
+                numero: numero.trim(),
+                chapa: chapa.trim()
+            };
+
+        });
+
+    }catch(erro){
+
+        alert("Erro ao carregar candidatos.csv");
+
+    }
+
+}
+
+carregarCandidatos();
+
+// ==========================
+// DIGITAR
+// ==========================
+
+function digitar(numero){
+
+    if(numeroDigitado.length >= 2) return;
+
+    numeroDigitado += numero;
+
+    atualizarTela();
+
+}
+
+// ==========================
+// ATUALIZAR TELA
+// ==========================
+
+function atualizarTela(){
+
+    document.getElementById("n1").innerText =
+        numeroDigitado[0] || "";
+
+    document.getElementById("n2").innerText =
+        numeroDigitado[1] || "";
+
+    const candidato =
+        candidatos.find(c => c.numero === numeroDigitado);
+
+    if(candidato){
+
+        document.getElementById("chapa").innerText =
+            candidato.chapa;
+
+        document.getElementById("foto").src =
+            `fotos/${candidato.numero}.png`;
+
+    }else{
+
+        if(numeroDigitado.length === 2){
+
+            document.getElementById("chapa").innerText =
+                "VOTO NULO";
+
+            document.getElementById("foto").src =
+                "fotos/nulo.png";
+
+        }else{
+
+            document.getElementById("chapa").innerText = "...";
+            document.getElementById("foto").src = "";
+
+        }
+
+    }
+
+}
+
+// ==========================
+// CORRIGE
+// ==========================
+
+function corrigir(){
+
+    numeroDigitado = "";
+
+    atualizarTela();
+
+}
+
+// ==========================
+// BRANCO
+// ==========================
+
+function votarBranco(){
+
+    numeroDigitado = "BR";
+
+    document.getElementById("conteudo").innerHTML = `
+        <div class="mensagem">
+            VOTO EM BRANCO
+        </div>
+    `;
+
+}
+
+// ==========================
+// CONFIRMAR
+// ==========================
+
+function confirmar(){
+
+    if(numeroDigitado === "") return;
+
+    // BRANCO
+
+    if(numeroDigitado === "BR"){
+
+        registrarVoto("BRANCO");
+
+        audioConfirmacao.play();
+
+        telaFim();
+
+        return;
+
+    }
+
+    // NULO
+
+    const candidato =
+        candidatos.find(c => c.numero === numeroDigitado);
+
+    if(!candidato){
+
+        registrarVoto("NULO");
+
+        audioConfirmacao.play();
+
+        telaFim();
+
+        return;
+
+    }
+
+    // NORMAL
+
+    registrarVoto(numeroDigitado);
+
+    audioConfirmacao.play();
+
+    telaFim();
+
+}
+
+// ==========================
+// REGISTRAR VOTO
+// ==========================
+
+function registrarVoto(chave){
+
+    let votos = {};
+
+    const votosSalvos =
+        localStorage.getItem("votos");
+
+    if(votosSalvos){
+
+        votos = JSON.parse(votosSalvos);
+
+    }
+
+    if(!votos[chave]){
+
+        votos[chave] = 0;
+
+    }
+
+    votos[chave]++;
+
+    localStorage.setItem(
+        "votos",
+        JSON.stringify(votos)
+    );
+
+}
+
+// ==========================
+// TELA FINAL
+// ==========================
+
+function telaFim(){
+
+    document.getElementById("conteudo").innerHTML = `
+        <div class="mensagem">
+            FIM
+        </div>
+    `;
+
+    setTimeout(() => {
+
+        location.reload();
+
+    }, 2000);
+
+}
+
+// ==========================
+// ADMIN
+// ==========================
+
+function abrirAdmin(){
+
+    const senha = prompt("Digite a senha:");
+
+    if(senha !== "admin123"){
+
+        alert("Senha incorreta");
+
+        return;
+
+    }
+
+    document.getElementById("modalAdmin")
+        .style.display = "flex";
+
+    carregarResultados();
+
+}
+
+function fecharAdmin(){
+
+    document.getElementById("modalAdmin")
+        .style.display = "none";
+
+}
+
+// ==========================
+// RESULTADOS
+// ==========================
+
+function carregarResultados(){
+
+    const div =
+        document.getElementById("resultadoVotos");
+
+    div.innerHTML = "";
+
+    const votos =
+        JSON.parse(localStorage.getItem("votos") || "{}");
+
+    candidatos.forEach(c => {
+
+        const qtd = votos[c.numero] || 0;
+
+        div.innerHTML += `
+            <div class="resultado">
+                <strong>${c.numero}</strong>
+                - ${c.chapa}
+                <br>
+                Votos: ${qtd}
+            </div>
+        `;
+
+    });
+
+    div.innerHTML += `
+        <div class="resultado">
+            <strong>BRANCOS:</strong>
+            ${votos["BRANCO"] || 0}
+        </div>
+    `;
+
+    div.innerHTML += `
+        <div class="resultado">
+            <strong>NULOS:</strong>
+            ${votos["NULO"] || 0}
+        </div>
+    `;
+
+}
+
+// ==========================
+// ZERAR URNA
+// ==========================
+
+function zerarUrna(){
+
+    if(confirm("Deseja realmente zerar a urna?")){
+
+        localStorage.removeItem("votos");
+
+        alert("Urna zerada!");
+
+        carregarResultados();
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

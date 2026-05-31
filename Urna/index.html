@@ -964,7 +964,7 @@ function carregarResultados(){
         </div>
     `;
     
-    // Mostrar vencedores (com emparce)
+    // Mostrar vencedores (com empate)
     const vencedores = getVencedores(votos, totalVotosValidos);
     
     if(vencedores.length > 0){
@@ -1324,7 +1324,7 @@ async function gerarPDFAta(){
     const totalNulos = votos["NULO"] || 0;
     const totalGeral = totalVotosValidos + totalBrancos + totalNulos;
     
-    // Ordenar por votos
+    // Ordenar por votos (decrescente)
     votosPorCandidato.sort((a, b) => b.votos - a.votos);
     
     // Encontrar vencedores (todos os que têm o maior número de votos)
@@ -1357,11 +1357,13 @@ async function gerarPDFAta(){
     
     let y = 20;
     
+    // Título
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.text("ATA DE FINALIZAÇÃO DA VOTAÇÃO", 105, y, { align: "center" });
     y += 10;
     
+    // Corpo da ata
     doc.setFont("helvetica", "normal");
     doc.setFontSize(11);
     
@@ -1375,38 +1377,110 @@ async function gerarPDFAta(){
     doc.text(`Ao final do processo, foram registrados ${totalGeral} votos. Desses, ${totalVotosValidos} foram válidos, ${totalBrancos} foram em branco e ${totalNulos} foram nulos.`, 20, y);
     y += 15;
     
-    // Texto sobre vencedores (tratando empate)
-    if(vencedores.length > 0){
-        doc.text(`Segundo a apuração dos votos válidos, participaram ${candidatos.length} concorrentes.`, 20, y);
-        y += 8;
-        
-        if(vencedores.length === 1){
-            doc.text(`O candidato vencedor foi:`, 20, y);
-            y += 7;
+    // ============================================
+    // LISTAR TODOS OS CANDIDATOS COM SEUS VOTOS
+    // ============================================
+    doc.setFont("helvetica", "bold");
+    doc.text("RESULTADO POR CANDIDATO:", 20, y);
+    y += 8;
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    
+    // Criar tabela com todos os candidatos
+    doc.setFont("helvetica", "bold");
+    doc.text("Nº", 25, y);
+    doc.text("Candidato", 45, y);
+    doc.text("Votos", 165, y);
+    doc.text("% Válidos", 180, y);
+    y += 4;
+    doc.line(20, y, 190, y);
+    y += 4;
+    doc.setFont("helvetica", "normal");
+    
+    // Listar todos os candidatos (já ordenados por votos)
+    for(const c of votosPorCandidato){
+        if(y > 260){
+            doc.addPage();
+            y = 20;
             doc.setFont("helvetica", "bold");
-            doc.text(`${vencedores[0].numero} — ${vencedores[0].chapa} (${vencedores[0].votos} votos - ${vencedores[0].percentual}%)`, 25, y);
+            doc.text("Nº", 25, y);
+            doc.text("Candidato", 45, y);
+            doc.text("Votos", 165, y);
+            doc.text("% Válidos", 180, y);
+            y += 4;
+            doc.line(20, y, 190, y);
+            y += 4;
             doc.setFont("helvetica", "normal");
-        } else {
-            doc.text(`Houve EMPATE entre os candidatos mais votados. Os vencedores são:`, 20, y);
-            y += 7;
-            doc.setFont("helvetica", "bold");
-            vencedores.forEach((v, idx) => {
-                doc.text(`${idx+1}º — ${v.numero} — ${v.chapa} (${v.votos} votos - ${v.percentual}%)`, 25, y);
-                y += 7;
-            });
-            doc.setFont("helvetica", "normal");
-            y += 3;
-            doc.text("Conforme previsto no regimento, haverá nova votação em segundo turno entre os empatados.", 20, y);
         }
-    } else {
-        doc.text(`Segundo a apuração dos votos válidos, participaram ${candidatos.length} concorrentes.`, 20, y);
-        y += 8;
-        doc.text("Nenhum voto válido foi registrado para os candidatos.", 20, y);
+        
+        doc.text(c.numero, 25, y);
+        
+        const nomeChapa = c.chapa;
+        if(nomeChapa.length > 35){
+            const parte1 = nomeChapa.substring(0, 35);
+            doc.text(parte1, 45, y);
+            y += 4;
+            if(y > 260){
+                doc.addPage();
+                y = 20;
+            }
+            const parte2 = nomeChapa.substring(35, 70);
+            doc.text(parte2, 45, y);
+        } else {
+            doc.text(nomeChapa, 45, y);
+        }
+        
+        doc.text(`${c.votos}`, 165, y);
+        const percentualValidos = totalVotosValidos > 0 ? ((c.votos / totalVotosValidos) * 100).toFixed(2) : 0;
+        doc.text(`${percentualValidos}%`, 180, y);
+        y += 6;
     }
     
-    y += 15;
+    y += 5;
+    doc.line(20, y, 190, y);
+    y += 8;
+    
+    // Resultado da votação
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    
+    if(vencedores.length === 1){
+        doc.text(`RESULTADO FINAL:`, 20, y);
+        y += 8;
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(0, 100, 0);
+        doc.text(`VENCEDOR: ${vencedores[0].numero} — ${vencedores[0].chapa}`, 25, y);
+        doc.setFont("helvetica", "normal");
+        doc.text(`com ${vencedores[0].votos} votos (${vencedores[0].percentual}% dos votos válidos)`, 25, y + 6);
+    } else if(vencedores.length > 1){
+        doc.setTextColor(255, 140, 0);
+        doc.text(`RESULTADO FINAL: EMPATE ENTRE ${vencedores.length} CANDIDATOS`, 20, y);
+        y += 8;
+        doc.setFont("helvetica", "bold");
+        doc.text(`CANDIDATOS EMPATADOS:`, 25, y);
+        y += 6;
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(0, 0, 0);
+        for(let i = 0; i < vencedores.length; i++){
+            const v = vencedores[i];
+            doc.text(`${i+1}º — ${v.numero} — ${v.chapa} (${v.votos} votos - ${v.percentual}%)`, 30, y);
+            y += 6;
+        }
+        y += 3;
+        doc.text("Conforme previsto no regimento, haverá nova votação em segundo turno entre os candidatos empatados.", 25, y);
+    } else {
+        doc.text(`RESULTADO FINAL:`, 20, y);
+        y += 8;
+        doc.text("Nenhum voto válido foi registrado para os candidatos.", 25, y);
+    }
+    
+    doc.setTextColor(0, 0, 0);
+    y += 20;
+    
     doc.text("Nada mais havendo a registrar, esta ata é emitida para fins de comprovação e arquivamento.", 20, y);
     
+    // Assinaturas
     y = doc.internal.pageSize.height - 50;
     doc.line(20, y, 190, y);
     y += 10;

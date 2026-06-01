@@ -1,0 +1,99 @@
+01,Anitta
+02,Caetano Veloso
+03,Gilberto Gil
+04,Ivete Sangalo
+05,Ludmilla
+06,Roberto Carlos
+07,Maria Bethânia
+08,Gal Costa
+09,Djavan
+10,Milton Nascimento
+11,Elba Ramalho
+12,Alceu Valença
+13,Zeca Pagodinho
+14,Jorge Ben Jor
+15,Chico Buarque
+16,Pabllo Vittar
+17,Iza
+18,Luísa Sonza
+19,Marília Mendonça
+20,Gusttavo Lima
+21,Luan Santana
+22,Jorge & Mateus
+23,Wesley Safadão
+24,Xand Avião
+25,Dilsinho
+26,Ferrugem
+27,Tierry
+28,João Gomes
+29,Zé Vaqueiro
+30,Daniela Mercury
+31,Claudia Leitte
+32,Bell Marques
+33,Carlinhos Brown
+34,Silvio Santos
+35,Faustão
+36,Luciano Huck
+37,Eliana
+38,Xuxa
+39,Angélica
+40,Ana Maria Braga
+41,Márcio Garcia
+42,Marcos Mion
+43,Tadeu Schmidt
+44,Patrícia Poeta
+45,Glória Groove
+46,Glória Pires
+47,Tony Ramos
+48,Lilia Cabral
+49,Murilo Benício
+50,Paolla Oliveira
+51,Juliana Paes
+52,Taís Araújo
+53,Lázaro Ramos
+54,Sheron Menezzes
+55,Camila Pitanga
+56,Cauã Reymond
+57,Selton Mello
+58,Wagner Moura
+59,Rodrigo Santoro
+60,Bruna Marquezine
+61,Marina Ruy Barbosa
+62,Sophie Charlotte
+63,Isis Valverde
+64,Ney Latorraca
+65,Marieta Severo
+66,Fernanda Montenegro
+67,Tiririca
+68,Whindersson Nunes
+69,Paulo Gustavo
+70,Fábio Porchat
+71,Tatá Werneck
+72,Dani Calabresa
+73,Rafael Portugal
+74,Marcio Donato
+75,Rodrigo Sant'Anna
+76,Carioca
+77,Tom Cavalcante
+78,Pelé
+79,Neymar Jr.
+80,Ronaldo Fenômeno
+81,Ronaldinho Gaúcho
+82,Marta
+83,Formiga
+84,Rebeca Andrade
+85,Jade Barbosa
+86,Flávia Saraiva
+87,Ítalo Ferreira
+88,Gabriel Medina
+89,Beatriz Ferreira
+90,Hebert Conceição
+91,Mayra Aguiar
+92,Rafaela Silva
+93,Felipe Neto
+94,Viih Tube
+95,GKay
+96,Carlinhos Maia
+97,Virginia Fonseca
+98,Nataly Nunes
+99,Camila Coutinho

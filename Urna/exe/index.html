@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urna Eletrônica - Grêmio Estudantil</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#555555;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+    flex-direction:column;
+}
+
+.titulo-principal{
+    text-align:center;
+    color:white;
+    margin-bottom:5px;
+    font-size:28px;
+    font-weight:bold;
+    text-shadow:2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.subtitulo-eleicao{
+    text-align:center;
+    color:#ffd700;
+    margin-bottom:20px;
+    font-size:18px;
+    font-weight:bold;
+    text-shadow:1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.urna{
+    width:990px;
+    background:#ececec;
+    border-radius:12px;
+    padding:25px;
+    display:flex;
+    gap:20px;
+    box-shadow:0 0 25px rgba(0,0,0,0.35);
+}
+
+.tela{
+    flex:1;
+    background:white;
+    border:3px solid #999;
+    padding:20px;
+    position:relative;
+}
+
+.teclado{
+    width:340px;
+    background:#2d2d2d;
+    border-radius:10px;
+    padding:20px;
+}
+
+.titulo{
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.numero-area{
+    margin-top:20px;
+}
+
+.numero-box{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.numero{
+    width:65px;
+    height:75px;
+    border:2px solid black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+    background:white;
+}
+
+.dados{
+    margin-top:70px;
+    font-size:24px;
+    line-height:1.8;
+}
+
+.foto{
+    
+    position:absolute;
+    top:60px;
+    right:20px;
+    width:180px;
+    border:2px solid #444;
+    background:white;
+    text-align:center;
+}
+
+.foto img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+
+.foto p{
+    background:#eee;
+    padding:6px;
+    font-weight:bold;
+}
+
+.aviso{
+    margin-top:40px;
+    border-top:2px solid black;
+    padding-top:15px;
+    font-size:18px;
+}
+
+.teclas{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.botao{
+    height:72px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:30px;
+    background:#111;
+    color:white;
+    box-shadow:0 4px 0 #000;
+}
+
+.botao:active{
+    transform:translateY(3px);
+    box-shadow:0 1px 0 #000;
+}
+
+.acoes{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.branco{
+    background:white;
+    color:black;
+    font-size:18px;
+}
+
+.corrige{
+    background:#f09046;
+    font-size:18px;
+}
+
+.confirma{
+    background:#48c079;
+    font-size:18px;
+    height:80px;
+}
+
+.admin-link{
+    position:absolute;
+    bottom:5px;
+    right:10px;
+    font-size:10px;
+    color:#999;
+    text-decoration:none;
+}
+
+.admin-link:hover{
+    color:#555;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.7);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-content{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:650px;
+    max-height:85vh;
+    overflow:auto;
+}
+
+.modal-content h2{
+    margin-bottom:20px;
+}
+
+.resultado{
+    background:#f2f2f2;
+    padding:10px;
+    border-radius:5px;
+    margin-bottom:10px;
+}
+
+.admin-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
+
+.admin-buttons button{
+    flex:1;
+    padding:10px;
+    cursor:pointer;
+    min-width:100px;
+}
+
+.mensagem{
+    font-size:38px;
+    text-align:center;
+    margin-top:120px;
+    font-weight:bold;
+}
+
+.btn-pdf{
+    background:#e74c3c;
+    color:white;
+    border:none;
+}
+
+.btn-apuracao{
+    background:#3498db;
+    color:white;
+    border:none;
+}
+
+.btn-ata{
+    background:#9b59b6;
+    color:white;
+    border:none;
+}
+
+.btn-config{
+    background:#f39c12;
+    color:white;
+    border:none;
+}
+
+.aviso-status{
+    background:#f0f0f0;
+    padding:10px;
+    margin-bottom:15px;
+    border-radius:5px;
+    text-align:center;
+    font-size:12px;
+    color:#666;
+}
+
+.config-section{
+    background:#ecf0f1;
+    padding:15px;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+
+.config-section label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+.config-section input{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:3px;
+    margin-bottom:10px;
+}
+
+.config-section button{
+    background:#2ecc71;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    border-radius:3px;
+    cursor:pointer;
+}
+
+.empate-box{
+    background:#fff3cd;
+    border-left:4px solid #ffc107;
+    padding:10px;
+    margin-top:10px;
+    border-radius:5px;
+}
+
+.vencedor-empate{
+    color:#856404;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 class="titulo-principal" id="tituloPrincipalUrna">Urna Eletrônica EMEF Solano Trindade</h1>
+<div class="subtitulo-eleicao" id="nomeEleicaoDisplay">Eleição Grêmio Estudantil 2026</div>
+
+<div class="urna">
+
+    <div class="tela">
+
+        <div class="titulo">
+            JUSTIÇA ELEITORAL
+        </div>
+
+        <div id="conteudo">
+
+            <h2>Seu voto para</h2>
+
+            <div class="numero-area">
+
+                <p>Número:</p>
+
+                <div class="numero-box">
+                    <div class="numero" id="n1"></div>
+                    <div class="numero" id="n2"></div>
+                </div>
+
+            </div>
+
+            <div class="dados">
+                <p><strong>Candidato:</strong> <span id="chapa">...</span></p>
+            </div>
+
+            <div class="foto">
+                <img id="foto" src="fotos/semfoto.png" alt="">
+              
+            </div>
+
+            <div class="aviso">
+                Aperte a tecla:<br><br>
+                CONFIRMA para CONFIRMAR este voto<br>
+                CORRIGE para REINICIAR este voto
+            </div>
+
+        </div>
+
+        <a href="#" class="admin-link" onclick="abrirAdmin()">
+            administração
+        </a>
+
+    </div>
+
+    <div class="teclado">
+
+        <div class="teclas">
+
+            <button class="botao" onclick="digitar('1')">1</button>
+            <button class="botao" onclick="digitar('2')">2</button>
+            <button class="botao" onclick="digitar('3')">3</button>
+
+            <button class="botao" onclick="digitar('4')">4</button>
+            <button class="botao" onclick="digitar('5')">5</button>
+            <button class="botao" onclick="digitar('6')">6</button>
+
+            <button class="botao" onclick="digitar('7')">7</button>
+            <button class="botao" onclick="digitar('8')">8</button>
+            <button class="botao" onclick="digitar('9')">9</button>
+
+            <button class="botao" onclick="digitar('0')">0</button>
+
+        </div>
+
+        <div class="acoes">
+
+            <button class="botao branco" onclick="votarBranco()">
+                BRANCO
+            </button>
+
+            <button class="botao corrige" onclick="corrigir()">
+                CORRIGE
+            </button>
+
+            <button class="botao confirma" onclick="confirmar()">
+                CONFIRMA
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal" id="modalAdmin">
+
+    <div class="modal-content">
+
+        <h2>Painel Administrativo</h2>
+        
+        <div class="config-section">
+            <label>Nome da Instituição / Título da Urna:</label>
+            <input type="text" id="inputNomeInstituicao" placeholder="Ex: EMEF Solano Trindade" value="EMEF Solano Trindade">
+            <label style="margin-top:10px;">Nome da Eleição:</label>
+            <input type="text" id="inputNomeEleicao" placeholder="Ex: Eleição Grêmio Estudantil 2026">
+            <button onclick="salvarTituloEleicao()" style="margin-top:10px;">Salvar Título da Eleição</button>
+        </div>
+        
+        <div id="statusUrna" class="aviso-status"></div>
+
+        <div id="resultadoVotos"></div>
+
+        <div class="admin-buttons" id="adminButtons">
+            <button onclick="zerarUrna()">
+                Zerar Urna
+            </button>
+
+            <button onclick="fecharAdmin()">
+                Fechar
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+const audioConfirmacao = new Audio("som/urna.mp3");
+
+let candidatos = [];
+let numeroDigitado = "";
+let votoBrancoAtivo = false;
+
+// Variáveis de controle de tempo
+let inicioVotacao = null;
+let fimVotacao = null;
+
+// ==========================
+// CARREGAR CSV (agora .txt)
+// ==========================
+
+async function carregarCandidatos(){
+
+    try{
+
+        const response = await fetch("candidatos.txt");
+        const texto = await response.text();
+
+        const linhas = texto.trim().split("\n");
+
+        candidatos = linhas.map(linha => {
+
+            const [numero, chapa] = linha.split(",");
+
+            return {
+                numero: numero.trim(),
+                chapa: chapa.trim()
+            };
+
+        });
+
+    }catch(erro){
+
+        alert("Erro ao carregar candidatos.txt");
+
+    }
+
+}
+
+carregarCandidatos();
+
+// ==========================
+// FUNÇÃO PARA OBTER VENCEDORES (LIDA COM EMPATES)
+// ==========================
+
+function getVencedores(votos, totalVotosValidos){
+    const votosPorCandidato = [];
+    
+    candidatos.forEach(c => {
+        const qtd = votos[c.numero] || 0;
+        if(qtd > 0){
+            votosPorCandidato.push({
+                numero: c.numero,
+                chapa: c.chapa,
+                votos: qtd,
+                percentual: totalVotosValidos > 0 ? ((qtd / totalVotosValidos) * 100).toFixed(2) : 0
+            });
+        }
+    });
+    
+    // Ordenar por votos (decrescente)
+    votosPorCandidato.sort((a, b) => b.votos - a.votos);
+    
+    if(votosPorCandidato.length === 0) return [];
+    
+    // Encontrar o maior número de votos
+    const maiorVotos = votosPorCandidato[0].votos;
+    
+    // Pegar todos os candidatos que têm o maior número de votos (empatados)
+    const vencedores = votosPorCandidato.filter(c => c.votos === maiorVotos);
+    
+    return vencedores;
+}
+
+// ==========================
+// GERENCIAR TÍTULO DA URNA E NOME DA ELEIÇÃO
+// ==========================
+
+function carregarTituloEleicao(){
+    // Carregar título da instituição/urna
+    const instituicaoSalva = localStorage.getItem("tituloInstituicao");
+    if(instituicaoSalva){
+        document.getElementById("tituloPrincipalUrna").innerText = "Urna Eletrônica " + instituicaoSalva;
+        document.getElementById("inputNomeInstituicao").value = instituicaoSalva;
+    } else {
+        document.getElementById("tituloPrincipalUrna").innerText = "Urna Eletrônica EMEF Solano Trindade";
+        document.getElementById("inputNomeInstituicao").value = "EMEF Solano Trindade";
+    }
+    
+    // Carregar nome da eleição
+    const nomeEleicaoSalvo = localStorage.getItem("nomeEleicao");
+    if(nomeEleicaoSalvo){
+        document.getElementById("nomeEleicaoDisplay").innerText = nomeEleicaoSalvo;
+        document.getElementById("inputNomeEleicao").value = nomeEleicaoSalvo;
+    } else {
+        document.getElementById("nomeEleicaoDisplay").innerText = "Eleição Grêmio Estudantil 2026";
+        document.getElementById("inputNomeEleicao").value = "Eleição Grêmio Estudantil 2026";
+    }
+}
+
+function salvarTituloEleicao(){
+    const novaInstituicao = document.getElementById("inputNomeInstituicao").value;
+    const novoNomeEleicao = document.getElementById("inputNomeEleicao").value;
+    
+    if(novaInstituicao.trim() === ""){
+        alert("Por favor, digite o nome da instituição!");
+        return;
+    }
+    if(novoNomeEleicao.trim() === ""){
+        alert("Por favor, digite o nome da eleição!");
+        return;
+    }
+    
+    localStorage.setItem("tituloInstituicao", novaInstituicao);
+    localStorage.setItem("nomeEleicao", novoNomeEleicao);
+    
+    document.getElementById("tituloPrincipalUrna").innerText = "Urna Eletrônica " + novaInstituicao;
+    document.getElementById("nomeEleicaoDisplay").innerText = novoNomeEleicao;
+    
+    alert("Título da urna e nome da eleição atualizados com sucesso!");
+}
+
+// Função auxiliar para obter o nome da instituição (título da urna)
+function getNomeInstituicao(){
+    return localStorage.getItem("tituloInstituicao") || "EMEF Solano Trindade";
+}
+
+// Função auxiliar para obter o nome da eleição
+function getNomeEleicao(){
+    return localStorage.getItem("nomeEleicao") || "Eleição Grêmio Estudantil 2026";
+}
+
+// ==========================
+// GERENCIAR TEMPO DE VOTAÇÃO
+// ==========================
+
+function iniciarContagemVotacao(){
+    let inicio = localStorage.getItem("inicioVotacao");
+    if(!inicio){
+        inicio = new Date().toISOString();
+        localStorage.setItem("inicioVotacao", inicio);
+    }
+    inicioVotacao = new Date(inicio);
+}
+
+function finalizarContagemVotacao(){
+    fimVotacao = new Date();
+    localStorage.setItem("fimVotacao", fimVotacao.toISOString());
+}
+
+function getTempoVotacao(){
+    const inicio = localStorage.getItem("inicioVotacao");
+    const fim = localStorage.getItem("fimVotacao");
+    
+    if(!inicio) return null;
+    
+    const dataInicio = new Date(inicio);
+    const dataFim = fim ? new Date(fim) : new Date();
+    
+    const diffMs = dataFim - dataInicio;
+    const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffMinutos = Math.floor((diffMs % (3600000)) / 60000);
+    
+    return {
+        inicio: dataInicio,
+        fim: dataFim,
+        horas: diffHoras,
+        minutos: diffMinutos,
+        totalHoras: (diffMs / (1000 * 60 * 60)).toFixed(2)
+    };
+}
+
+// ==========================
+// VERIFICAR SE TEM VOTOS
+// ==========================
+
+function temVotosNaUrna(){
+    const votos = JSON.parse(localStorage.getItem("votos") || "{}");
+    
+    for(let chave in votos){
+        if(votos[chave] > 0){
+            return true;
+        }
+    }
+    return false;
+}
+
+// ==========================
+// ATUALIZAR BOTÕES DO ADMIN
+// ==========================
+
+function atualizarBotoesAdmin(){
+    const divBotoes = document.getElementById("adminButtons");
+    const temVotos = temVotosNaUrna();
+    const statusDiv = document.getElementById("statusUrna");
+    
+    if(temVotos){
+        statusDiv.innerHTML = "📊 Status: <strong>Votação em andamento</strong> - A urna já possui votos registrados.";
+        statusDiv.style.background = "#e8f5e9";
+        statusDiv.style.color = "#2e7d32";
+        
+        divBotoes.innerHTML = `
+            <button onclick="zerarUrna()">
+                Zerar Urna
+            </button>
+            <button onclick="gerarPDFApuracao()" class="btn-apuracao">
+                Baixar Apuração (PDF)
+            </button>
+            <button onclick="gerarPDFAta()" class="btn-ata">
+                Gerar Ata de Finalização (PDF)
+            </button>
+            <button onclick="fecharAdmin()">
+                Fechar
+            </button>
+        `;
+    }else{
+        statusDiv.innerHTML = "✅ Status: <strong>Urna zerada</strong> - Nenhum voto registrado até o momento.";
+        statusDiv.style.background = "#fff3e0";
+        statusDiv.style.color = "#e65100";
+        
+        divBotoes.innerHTML = `
+            <button onclick="zerarUrna()">
+                Zerar Urna
+            </button>
+            <button onclick="gerarPDFZeressima()" class="btn-pdf">
+                Baixar Zerésima (PDF)
+            </button>
+            <button onclick="fecharAdmin()">
+                Fechar
+            </button>
+        `;
+    }
+}
+
+// ==========================
+// RESTAURAR TELA NORMAL
+// ==========================
+
+function restaurarTelaNormal(){
+    votoBrancoAtivo = false;
+    
+    document.getElementById("conteudo").innerHTML = `
+        <h2>Seu voto para</h2>
+
+        <div class="numero-area">
+            <p>Número:</p>
+            <div class="numero-box">
+                <div class="numero" id="n1"></div>
+                <div class="numero" id="n2"></div>
+            </div>
+        </div>
+
+        <div class="dados">
+            <p><strong>Candidato:</strong> <span id="chapa">...</span></p>
+        </div>
+
+        <div class="foto">
+            <img id="foto" src="fotos/semfoto.png" alt="">
+        </div>
+
+        <div class="aviso">
+            Aperte a tecla:<br><br>
+            CONFIRMA para CONFIRMAR este voto<br>
+            CORRIGE para REINICIAR este voto
+        </div>
+    `;
+    
+    numeroDigitado = "";
+    atualizarTela();
+}
+
+// ==========================
+// DIGITAR
+// ==========================
+
+function digitar(numero){
+    
+    if(votoBrancoAtivo){
+        restaurarTelaNormal();
+    }
+    
+    if(numeroDigitado.length >= 2) return;
+
+    numeroDigitado += numero;
+
+    atualizarTela();
+
+}
+
+// ==========================
+// ATUALIZAR TELA
+// ==========================
+
+function atualizarTela(){
+
+    const n1Element = document.getElementById("n1");
+    const n2Element = document.getElementById("n2");
+    const chapaElement = document.getElementById("chapa");
+    const fotoElement = document.getElementById("foto");
+    
+    if(!n1Element || !n2Element || !chapaElement || !fotoElement) return;
+
+    n1Element.innerText = numeroDigitado[0] || "";
+    n2Element.innerText = numeroDigitado[1] || "";
+
+    const candidato =
+        candidatos.find(c => c.numero === numeroDigitado);
+
+    if(candidato){
+
+        chapaElement.innerText = candidato.chapa;
+        fotoElement.src = `fotos/${candidato.numero}.png`;
+
+    }else{
+
+        if(numeroDigitado.length === 2){
+
+            chapaElement.innerText = "VOTO NULO";
+            fotoElement.src = "fotos/nulo.png";
+
+        }else{
+
+            chapaElement.innerText = "...";
+            fotoElement.src = "fotos/semfoto.png";
+
+        }
+
+    }
+
+}
+
+// ==========================
+// CORRIGE
+// ==========================
+
+function corrigir(){
+    
+    if(votoBrancoAtivo){
+        restaurarTelaNormal();
+    } else {
+        numeroDigitado = "";
+        atualizarTela();
+    }
+
+}
+
+// ==========================
+// BRANCO
+// ==========================
+
+function votarBranco(){
+    
+    votoBrancoAtivo = true;
+    numeroDigitado = "BR";
+    
+    document.getElementById("conteudo").innerHTML = `
+        <div class="mensagem">
+            VOTO EM BRANCO
+        </div>
+    `;
+
+}
+
+// ==========================
+// CONFIRMAR
+// ==========================
+
+function confirmar(){
+
+    if(numeroDigitado === "" && !votoBrancoAtivo) return;
+
+    if(numeroDigitado === "BR" || votoBrancoAtivo){
+
+        registrarVoto("BRANCO");
+
+        audioConfirmacao.play();
+
+        telaFim();
+
+        return;
+
+    }
+
+    const candidato =
+        candidatos.find(c => c.numero === numeroDigitado);
+
+    if(!candidato){
+
+        registrarVoto("NULO");
+
+        audioConfirmacao.play();
+
+        telaFim();
+
+        return;
+
+    }
+
+    registrarVoto(numeroDigitado);
+
+    audioConfirmacao.play();
+
+    telaFim();
+
+}
+
+// ==========================
+// REGISTRAR VOTO
+// ==========================
+
+function registrarVoto(chave){
+
+    let votos = {};
+
+    const votosSalvos =
+        localStorage.getItem("votos");
+
+    if(votosSalvos){
+
+        votos = JSON.parse(votosSalvos);
+
+    }
+
+    if(!votos[chave]){
+
+        votos[chave] = 0;
+
+    }
+
+    votos[chave]++;
+
+    localStorage.setItem(
+        "votos",
+        JSON.stringify(votos)
+    );
+
+}
+
+// ==========================
+// TELA FINAL
+// ==========================
+
+function telaFim(){
+
+    document.getElementById("conteudo").innerHTML = `
+        <div class="mensagem">
+            FIM
+        </div>
+    `;
+
+    setTimeout(() => {
+
+        location.reload();
+
+    }, 2000);
+
+}
+
+// ==========================
+// ADMIN
+// ==========================
+
+function abrirAdmin(){
+
+    const senha = prompt("Digite a senha:");
+
+    if(senha !== "admin123"){
+
+        alert("Senha incorreta");
+
+        return;
+
+    }
+
+    document.getElementById("modalAdmin")
+        .style.display = "flex";
+
+    carregarResultados();
+    atualizarBotoesAdmin();
+    carregarTituloEleicao();
+
+}
+
+function fecharAdmin(){
+
+    document.getElementById("modalAdmin")
+        .style.display = "none";
+
+}
+
+// ==========================
+// RESULTADOS
+// ==========================
+
+function carregarResultados(){
+
+    const div =
+        document.getElementById("resultadoVotos");
+
+    div.innerHTML = "";
+
+    const votos =
+        JSON.parse(localStorage.getItem("votos") || "{}");
+
+    const temVotos = temVotosNaUrna();
+    
+    if(!temVotos){
+        div.innerHTML = "<p style='text-align:center;color:#666;'>Nenhum voto registrado ainda. A urna está zerada.</p>";
+        return;
+    }
+
+    let totalVotosValidos = 0;
+    candidatos.forEach(c => {
+        totalVotosValidos += votos[c.numero] || 0;
+    });
+    
+    const totalGeral = totalVotosValidos + (votos["BRANCO"] || 0) + (votos["NULO"] || 0);
+
+    candidatos.forEach(c => {
+
+        const qtd = votos[c.numero] || 0;
+        const percentual = totalGeral > 0 ? ((qtd / totalGeral) * 100).toFixed(2) : 0;
+
+        div.innerHTML += `
+            <div class="resultado">
+                <strong>${c.numero}</strong>
+                - ${c.chapa}
+                <br>
+                Votos: ${qtd} (${percentual}%)
+            </div>
+        `;
+
+    });
+
+    div.innerHTML += `
+        <div class="resultado">
+            <strong>BRANCOS:</strong>
+            ${votos["BRANCO"] || 0}
+        </div>
+    `;
+
+    div.innerHTML += `
+        <div class="resultado">
+            <strong>NULOS:</strong>
+            ${votos["NULO"] || 0}
+        </div>
+    `;
+    
+    const vencedores = getVencedores(votos, totalVotosValidos);
+    
+    if(vencedores.length > 0){
+        if(vencedores.length === 1){
+            div.innerHTML += `
+                <div class="resultado" style="background:#d4edda; border-left:4px solid #28a745;">
+                    <strong>🏆 VENCEDOR:</strong><br>
+                    ${vencedores[0].numero} - ${vencedores[0].chapa}<br>
+                    Votos: ${vencedores[0].votos} (${vencedores[0].percentual}%)
+                </div>
+            `;
+        } else {
+            let empateTexto = "<strong>⚠️ EMPATE NA VOTAÇÃO! VENCEDORES:</strong><br>";
+            vencedores.forEach(v => {
+                empateTexto += `• ${v.numero} - ${v.chapa} (${v.votos} votos - ${v.percentual}%)<br>`;
+            });
+            div.innerHTML += `
+                <div class="resultado" style="background:#fff3cd; border-left:4px solid #ffc107;">
+                    ${empateTexto}
+                </div>
+            `;
+        }
+    }
+
+}
+
+// ==========================
+// ZERAR URNA
+// ==========================
+
+function zerarUrna(){
+
+    if(confirm("Deseja realmente zerar a urna? Isso reiniciará toda a votação!")){
+
+        localStorage.removeItem("votos");
+        localStorage.removeItem("inicioVotacao");
+        localStorage.removeItem("fimVotacao");
+
+        alert("Urna zerada! A votação será reiniciada.");
+
+        carregarResultados();
+        atualizarBotoesAdmin();
+
+    }
+
+}
+
+// ==========================
+// GERAR PDF DA ZERÉSIMA (com título dinâmico)
+// ==========================
+
+async function gerarPDFZeressima(){
+
+    if(temVotosNaUrna()){
+        alert("Não é possível gerar a Zerésima pois a urna já possui votos registrados!");
+        return;
+    }
+
+    if(candidatos.length === 0){
+        alert("Aguardando carregamento dos candidatos. Tente novamente em alguns segundos.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const nomeInstituicao = getNomeInstituicao();
+    const nomeEleicao = getNomeEleicao();
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("ZERÉSIMA - URNA ELETRÔNICA", 105, 20, { align: "center" });
+    
+    doc.setFontSize(14);
+    doc.text(nomeInstituicao, 105, 30, { align: "center" });
+    
+    doc.setFontSize(11);
+    doc.text(`Eleição: ${nomeEleicao}`, 105, 38, { align: "center" });
+    
+    doc.setFontSize(10);
+    doc.text(`Gerado em: ${new Date().toLocaleString()}`, 105, 46, { align: "center" });
+    
+    doc.line(20, 53, 190, 53);
+
+    let y = 63;
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.text("Nº", 25, y);
+    doc.text("Candidato", 50, y);
+    doc.text("Votos", 170, y);
+    
+    y += 5;
+    doc.line(20, y, 190, y);
+    y += 5;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+
+    candidatos.forEach((candidato, index) => {
+        if(y > 270){
+            doc.addPage();
+            y = 20;
+        }
+        
+        doc.text(candidato.numero, 25, y);
+        
+        const chapaTexto = candidato.chapa;
+        if(chapaTexto.length > 35){
+            const parte1 = chapaTexto.substring(0, 35);
+            const parte2 = chapaTexto.substring(35, 70);
+            doc.text(parte1, 50, y);
+            if(parte2){
+                doc.text(parte2, 50, y + 5);
+                y += 5;
+            }
+        }else{
+            doc.text(chapaTexto, 50, y);
+        }
+        
+        doc.text("0", 170, y);
+        y += 8;
+    });
+
+    if(y > 270){
+        doc.addPage();
+        y = 20;
+    }
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("BRANCOS", 50, y);
+    doc.text("0", 170, y);
+    y += 8;
+    
+    doc.text("NULOS", 50, y);
+    doc.text("0", 170, y);
+    y += 8;
+
+    doc.line(20, y + 5, 190, y + 5);
+    doc.setFontSize(8);
+    doc.text("Documento comprobatório da zerésima da urna eletrônica.", 105, y + 12, { align: "center" });
+    doc.text("Nenhum voto foi computado até o momento da emissão deste documento.", 105, y + 18, { align: "center" });
+    
+    doc.setFontSize(9);
+    doc.text("___________________________________", 40, y + 35);
+    doc.text("Presidente da Mesa", 55, y + 42);
+    
+    doc.text("___________________________________", 130, y + 35);
+    doc.text("1º Secretário", 150, y + 42);
+
+    doc.save(`zeresima_${nomeInstituicao.replace(/\s/g, "_")}.pdf`);
+    
+    alert("Zerésima gerada com sucesso!");
+}
+
+// ==========================
+// GERAR PDF DA APURAÇÃO (com título dinâmico)
+// ==========================
+
+async function gerarPDFApuracao(){
+
+    if(!temVotosNaUrna()){
+        alert("Não é possível gerar a Apuração pois a urna está zerada (nenhum voto registrado)!");
+        return;
+    }
+
+    if(candidatos.length === 0){
+        alert("Aguardando carregamento dos candidatos. Tente novamente em alguns segundos.");
+        return;
+    }
+
+    const votos = JSON.parse(localStorage.getItem("votos") || "{}");
+    const nomeInstituicao = getNomeInstituicao();
+    const nomeEleicao = getNomeEleicao();
+    
+    let totalVotosValidos = 0;
+    candidatos.forEach(c => {
+        totalVotosValidos += votos[c.numero] || 0;
+    });
+    
+    const totalBrancos = votos["BRANCO"] || 0;
+    const totalNulos = votos["NULO"] || 0;
+    const totalGeral = totalVotosValidos + totalBrancos + totalNulos;
+    
+    const vencedores = getVencedores(votos, totalVotosValidos);
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text("BOLETIM DE APURAÇÃO", 105, 20, { align: "center" });
+    
+    doc.setFontSize(16);
+    doc.text("URNA ELETRÔNICA", 105, 30, { align: "center" });
+    
+    doc.setFontSize(14);
+    doc.text(nomeInstituicao, 105, 40, { align: "center" });
+    
+    doc.setFontSize(11);
+    doc.text(`Eleição: ${nomeEleicao}`, 105, 50, { align: "center" });
+    
+    doc.setFontSize(10);
+    doc.text(`Data da apuração: ${new Date().toLocaleString()}`, 105, 58, { align: "center" });
+    
+    doc.line(20, 65, 190, 65);
+    
+    let y = 75;
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("RESULTADO DAS VOTAÇÕES", 105, y, { align: "center" });
+    y += 10;
+    
+    doc.setFontSize(11);
+    doc.text("CANDIDATOS:", 20, y);
+    y += 8;
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    
+    const candidatosOrdenados = [...candidatos].sort((a, b) => {
+        const votosA = votos[a.numero] || 0;
+        const votosB = votos[b.numero] || 0;
+        return votosB - votosA;
+    });
+    
+    candidatosOrdenados.forEach((candidato) => {
+        if(y > 270){
+            doc.addPage();
+            y = 20;
+        }
+        
+        const qtd = votos[candidato.numero] || 0;
+        const percentual = totalGeral > 0 ? ((qtd / totalGeral) * 100).toFixed(2) : 0;
+        
+        doc.setFont("helvetica", "bold");
+        doc.text(`${candidato.numero}`, 25, y);
+        doc.setFont("helvetica", "normal");
+        
+        const chapaTexto = candidato.chapa;
+        if(chapaTexto.length > 30){
+            const parte1 = chapaTexto.substring(0, 30);
+            const parte2 = chapaTexto.substring(30, 60);
+            doc.text(parte1, 45, y);
+            if(parte2){
+                doc.text(parte2, 45, y + 5);
+                y += 5;
+            }
+        }else{
+            doc.text(chapaTexto, 45, y);
+        }
+        
+        doc.text(`${qtd} votos`, 150, y);
+        doc.text(`(${percentual}%)`, 170, y);
+        y += 7;
+    });
+    
+    if(y > 260){
+        doc.addPage();
+        y = 20;
+    }
+    
+    y += 5;
+    doc.line(20, y, 190, y);
+    y += 5;
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("VOTOS BRANCOS:", 25, y);
+    doc.setFont("helvetica", "normal");
+    const percentualBrancos = totalGeral > 0 ? ((totalBrancos / totalGeral) * 100).toFixed(2) : 0;
+    doc.text(`${totalBrancos} votos (${percentualBrancos}%)`, 150, y);
+    y += 8;
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("VOTOS NULOS:", 25, y);
+    doc.setFont("helvetica", "normal");
+    const percentualNulos = totalGeral > 0 ? ((totalNulos / totalGeral) * 100).toFixed(2) : 0;
+    doc.text(`${totalNulos} votos (${percentualNulos}%)`, 150, y);
+    y += 12;
+    
+    doc.line(20, y, 190, y);
+    y += 5;
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(11);
+    doc.text("TOTAIS:", 25, y);
+    doc.text(`Total de votos válidos: ${totalVotosValidos}`, 25, y + 8);
+    doc.text(`Total de votos apurados: ${totalGeral}`, 25, y + 16);
+    
+    if(vencedores.length > 0){
+        y += 30;
+        doc.setFontSize(12);
+        
+        if(vencedores.length === 1){
+            doc.setTextColor(0, 100, 0);
+            doc.text("✓ CANDIDATO MAIS VOTADO:", 25, y);
+            doc.setFontSize(11);
+            doc.text(`${vencedores[0].numero} - ${vencedores[0].chapa}`, 25, y + 8);
+            doc.text(`Total de votos: ${vencedores[0].votos} (${vencedores[0].percentual}%)`, 25, y + 16);
+        } else {
+            doc.setTextColor(255, 140, 0);
+            doc.text("⚠️ EMPATE NA VOTAÇÃO! VENCEDORES:", 25, y);
+            doc.setFontSize(10);
+            let linhaY = y + 8;
+            vencedores.forEach((v, idx) => {
+                doc.text(`${idx+1}º - ${v.numero} - ${v.chapa} (${v.votos} votos - ${v.percentual}%)`, 30, linhaY);
+                linhaY += 6;
+            });
+        }
+        doc.setTextColor(0, 0, 0);
+    }
+    
+    y = doc.internal.pageSize.height - 50;
+    doc.line(20, y, 190, y);
+    doc.setFontSize(8);
+    doc.text("Documento oficial de apuração da urna eletrônica.", 105, y + 8, { align: "center" });
+    doc.text("Este documento comprova o resultado oficial da votação.", 105, y + 14, { align: "center" });
+    
+    doc.setFontSize(9);
+    doc.text("___________________________________", 40, y + 30);
+    doc.text("Presidente da Mesa", 55, y + 37);
+    
+    doc.text("___________________________________", 130, y + 30);
+    doc.text("1º Secretário", 150, y + 37);
+    
+    doc.save(`apuracao_${nomeInstituicao.replace(/\s/g, "_")}.pdf`);
+    
+    alert("Apuração gerada com sucesso!");
+}
+
+// ==========================
+// GERAR PDF DA ATA DE FINALIZAÇÃO (com título dinâmico)
+// ==========================
+
+async function gerarPDFAta(){
+
+    if(!temVotosNaUrna()){
+        alert("Não é possível gerar a Ata de Finalização pois a urna está zerada (nenhum voto registrado)!");
+        return;
+    }
+
+    if(candidatos.length === 0){
+        alert("Aguardando carregamento dos candidatos. Tente novamente em alguns segundos.");
+        return;
+    }
+
+    const votos = JSON.parse(localStorage.getItem("votos") || "{}");
+    const nomeInstituicao = getNomeInstituicao();
+    const nomeEleicao = getNomeEleicao();
+    
+    let totalVotosValidos = 0;
+    const votosPorCandidato = [];
+    
+    candidatos.forEach(c => {
+        const qtd = votos[c.numero] || 0;
+        totalVotosValidos += qtd;
+        votosPorCandidato.push({
+            numero: c.numero,
+            chapa: c.chapa,
+            votos: qtd,
+            percentual: totalVotosValidos > 0 ? ((qtd / totalVotosValidos) * 100).toFixed(2) : 0
+        });
+    });
+    
+    const totalBrancos = votos["BRANCO"] || 0;
+    const totalNulos = votos["NULO"] || 0;
+    const totalGeral = totalVotosValidos + totalBrancos + totalNulos;
+    
+    votosPorCandidato.sort((a, b) => b.votos - a.votos);
+    
+    const maiorVotos = votosPorCandidato.length > 0 ? votosPorCandidato[0].votos : 0;
+    const vencedores = votosPorCandidato.filter(c => c.votos === maiorVotos && c.votos > 0);
+    
+    const tempo = getTempoVotacao();
+    let duracaoTexto = "";
+    let inicioTexto = "";
+    let fimTexto = "";
+    
+    if(tempo){
+        inicioTexto = `${tempo.inicio.toLocaleDateString()} às ${tempo.inicio.toLocaleTimeString()}`;
+        if(tempo.fim){
+            fimTexto = `${tempo.fim.toLocaleDateString()} às ${tempo.fim.toLocaleTimeString()}`;
+        } else {
+            fimTexto = `${new Date().toLocaleDateString()} às ${new Date().toLocaleTimeString()}`;
+        }
+        duracaoTexto = `${tempo.horas} h ${tempo.minutos} min`;
+    } else {
+        inicioTexto = "Não registrado";
+        fimTexto = "Não registrado";
+        duracaoTexto = "Não registrado";
+    }
+    
+    finalizarContagemVotacao();
+    
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    
+    let y = 20;
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("ATA DE FINALIZAÇÃO DA VOTAÇÃO", 105, y, { align: "center" });
+    y += 10;
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    
+    const textoAbertura = `A instituição ${nomeInstituicao} registra, por meio desta ata, o encerramento da votação "${nomeEleicao}", realizada em ${new Date().toLocaleDateString()}. A votação teve início em ${inicioTexto} e foi encerrada em ${fimTexto}, totalizando ${duracaoTexto} de duração.`;
+    
+    const textoQuebrado = doc.splitTextToSize(textoAbertura, 170);
+    doc.text(textoQuebrado, 20, y);
+    y += (textoQuebrado.length * 7);
+    
+    y += 5;
+    doc.text(`Ao final do processo, foram registrados ${totalGeral} votos. Desses, ${totalVotosValidos} foram válidos, ${totalBrancos} foram em branco e ${totalNulos} foram nulos.`, 20, y);
+    y += 15;
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("RESULTADO POR CANDIDATO:", 20, y);
+    y += 8;
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Nº", 25, y);
+    doc.text("Candidato", 45, y);
+    doc.text("Votos", 165, y);
+    doc.text("% Válidos", 180, y);
+    y += 4;
+    doc.line(20, y, 190, y);
+    y += 4;
+    doc.setFont("helvetica", "normal");
+    
+    for(const c of votosPorCandidato){
+        if(y > 260){
+            doc.addPage();
+            y = 20;
+            doc.setFont("helvetica", "bold");
+            doc.text("Nº", 25, y);
+            doc.text("Candidato", 45, y);
+            doc.text("Votos", 165, y);
+            doc.text("% Válidos", 180, y);
+            y += 4;
+            doc.line(20, y, 190, y);
+            y += 4;
+            doc.setFont("helvetica", "normal");
+        }
+        
+        doc.text(c.numero, 25, y);
+        
+        const nomeChapa = c.chapa;
+        if(nomeChapa.length > 35){
+            const parte1 = nomeChapa.substring(0, 35);
+            doc.text(parte1, 45, y);
+            y += 4;
+            if(y > 260){
+                doc.addPage();
+                y = 20;
+            }
+            const parte2 = nomeChapa.substring(35, 70);
+            doc.text(parte2, 45, y);
+        } else {
+            doc.text(nomeChapa, 45, y);
+        }
+        
+        doc.text(`${c.votos}`, 165, y);
+        const percentualValidos = totalVotosValidos > 0 ? ((c.votos / totalVotosValidos) * 100).toFixed(2) : 0;
+        doc.text(`${percentualValidos}%`, 180, y);
+        y += 6;
+    }
+    
+    y += 5;
+    doc.line(20, y, 190, y);
+    y += 8;
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    
+    if(vencedores.length === 1){
+        doc.text(`RESULTADO FINAL:`, 20, y);
+        y += 8;
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(0, 100, 0);
+        doc.text(`VENCEDOR: ${vencedores[0].numero} — ${vencedores[0].chapa}`, 25, y);
+        doc.setFont("helvetica", "normal");
+        doc.text(`com ${vencedores[0].votos} votos (${vencedores[0].percentual}% dos votos válidos)`, 25, y + 6);
+    } else if(vencedores.length > 1){
+        doc.setTextColor(255, 140, 0);
+        doc.text(`RESULTADO FINAL: EMPATE ENTRE ${vencedores.length} CANDIDATOS`, 20, y);
+        y += 8;
+        doc.setFont("helvetica", "bold");
+        doc.text(`CANDIDATOS EMPATADOS:`, 25, y);
+        y += 6;
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(0, 0, 0);
+        for(let i = 0; i < vencedores.length; i++){
+            const v = vencedores[i];
+            doc.text(`${i+1}º — ${v.numero} — ${v.chapa} (${v.votos} votos - ${v.percentual}%)`, 30, y);
+            y += 6;
+        }
+        y += 3;
+        doc.text("Conforme previsto no regimento, haverá nova votação em segundo turno entre os candidatos empatados.", 25, y);
+    } else {
+        doc.text(`RESULTADO FINAL:`, 20, y);
+        y += 8;
+        doc.text("Nenhum voto válido foi registrado para os candidatos.", 25, y);
+    }
+    
+    doc.setTextColor(0, 0, 0);
+    y += 20;
+    
+    doc.text("Nada mais havendo a registrar, esta ata é emitida para fins de comprovação e arquivamento.", 20, y);
+    
+    y = doc.internal.pageSize.height - 50;
+    doc.line(20, y, 190, y);
+    y += 10;
+    
+    doc.setFontSize(9);
+    doc.text("___________________________________", 40, y);
+    doc.text("Presidente da Mesa", 55, y + 7);
+    
+    doc.text("___________________________________", 130, y);
+    doc.text("1º Secretário", 150, y + 7);
+    
+    doc.save(`ata_finalizacao_${nomeInstituicao.replace(/\s/g, "_")}.pdf`);
+    
+    alert("Ata de Finalização gerada com sucesso!");
+}
+
+// Inicializar
+iniciarContagemVotacao();
+carregarTituloEleicao();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../Estilo/estilo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Matemática - Renato Nogueira</title>
+
+    <style>
+        /* Estilos complementares para a página de matemática */
+        .container-matematica {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 100%;
+        }
+
+        .card-matematica {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-matematica::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .card-matematica:hover::before {
+            opacity: 1;
+        }
+
+        .card-matematica:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-matematica .ano {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #ffd700;
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: 8px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .card-matematica .titulo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .card-matematica .subtitulo {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 18px;
+            font-weight: 300;
+        }
+
+        .card-matematica .icone {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-matematica .btn-acessar {
+            display: inline-block;
+            padding: 10px 32px;
+            background: linear-gradient(135deg, #ffd700, #f0a500);
+            color: #1a1a2e;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
+        }
+
+        .card-matematica .btn-acessar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.4);
+            background: linear-gradient(135deg, #ffe44d, #f5a800);
+        }
+
+        .card-matematica .badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        /* Estrelas decorativas nos cards */
+        .card-matematica .deco {
+            position: absolute;
+            font-size: 0.6rem;
+            color: rgba(255, 215, 0, 0.15);
+            user-select: none;
+        }
+
+        .card-matematica .deco:nth-child(1) { top: 10px; right: 15px; }
+        .card-matematica .deco:nth-child(2) { bottom: 10px; left: 15px; }
+        .card-matematica .deco:nth-child(3) { top: 50%; right: 8px; transform: translateY(-50%); }
+
+        /* Ajustes para o container principal */
+        .principal-size {
+            min-height: calc(100vh - 280px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container-matematica h2 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .container-matematica .descricao {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .container-matematica {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 20px 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-matematica {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                padding: 15px 12px;
+            }
+            .card-matematica .ano {
+                font-size: 2.6rem;
+            }
+            .container-matematica h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Estilo para o canvas de estrelas */
+        #sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .preto {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+        }
+
+        .lista, .principal, footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Ajuste da lista de navegação para não quebrar */
+        .lista ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="preto" id="ceu">
+        <canvas id="sky"></canvas>
+
+        <!-- Menu de Navegação -->
+        <div class="lista">
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../SobreMim/index.html">Sobre Mim</a></li>
+                <li><a href="#">Repositórios</a></li>
+                <li><a href="../Aplicacoes/index.html">Aplicações</a></li>
+                <li><a href="./index.html" style="color: #ffd700;">Matemática</a></li>
+            </ul>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="principal principal-size">
+            <div class="container-matematica">
+
+                <h2>📐 Matemática</h2>
+                <p class="descricao">Atividades interativas para cada ano do Ensino Fundamental</p>
+
+                <!-- 6º ANO -->
+                <div class="card-matematica">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="icone">🧮</span>
+                    <div class="ano">6º</div>
+                    <!-- <div class="titulo">Ano</div>
+                    <div class="subtitulo">Números e operações</div> -->
+                    
+                    <a href="./6/index.html" class="btn-acessar">Acessar</a>
+                </div>
+
+                <!-- 7º ANO -->
+                <div class="card-matematica">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="icone">📊</span>
+                    <div class="ano">7º</div>
+                    <div class="titulo">Ano</div>
+                    <!-- <div class="subtitulo">Frações e decimais</div>
+                    <span class="badge">20 atividades</span> -->
+                    <a href="./7/index.html" class="btn-acessar">Acessar</a>
+                </div>
+
+                <!-- 8º ANO -->
+                <div class="card-matematica">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="icone">📈</span>
+                    <div class="ano">8º</div>
+                    <div class="titulo">Ano</div>
+                    <!-- <div class="subtitulo">Equações e geometria</div>
+                    <span class="badge">20 atividades</span> -->
+                    <a href="./8/index.html" class="btn-acessar">Acessar</a>
+                </div>
+
+                <!-- 9º ANO -->
+                <div class="card-matematica">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="icone">🧠</span>
+                    <div class="ano">9º</div>
+                    <div class="titulo">Ano</div>
+                    <!-- <div class="subtitulo">Funções e probabilidade</div>
+                    <span class="badge">20 atividades</span> -->
+                    <a href="./9/index.html" class="btn-acessar">Acessar</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer-size">
+        <div class="footer">
+            <div class="rodape">
+                <h3>Sobre</h3>
+                <p>Ferroviário por destino</p>
+                <p>Professor por vocação</p>
+                <p>Programador por hobbie</p>
+            </div>
+            <div class="rodape">
+                <h3>Contato</h3>
+                <p>renatonogueirasenai@gmail.com</p>
+                <p>Butantã, São Paulo - SP</p>
+                <p>(11) 98146-1081</p>
+            </div>
+            <div class="rodape">
+                <h3>Redes Sociais</h3>
+                <p><a target="_blank" href="https://github.com/Nogueirarenato">GitHub</a></p>
+                <p><a target="_blank" href="https://www.linkedin.com/in/renato-nogueira-b5020131a/">Linkedin</a></p>
+                <p><a target="_blank" href="https://www.facebook.com/renato.nogueira.56027">Facebook</a></p>
+            </div>
+        </div>
+        <div class="devfor">Desenvolvido Por Renato Nogueira 2020 - <span id="data-atual"></span></div>
+    </footer>
+
+</body>
+
+<script src="../Scripts/principal.js"></script>
+
+<script>
+    // Script do canvas de estrelas (adaptado do seu site)
+    (function() {
+        const canvas = document.getElementById('sky');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function createStars(count) {
+            stars = [];
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.2 + 0.4,
+                    brightness: Math.random() * 0.8 + 0.2,
+                    speed: Math.random() * 0.005 + 0.002
+                });
+            }
+        }
+
+        function drawStars(time) {
+            ctx.clearRect(0, 0, width, height);
+            for (const star of stars) {
+                const flicker = 0.6 + 0.4 * Math.sin(time * star.speed + star.x);
+                const alpha = star.brightness * flicker;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fill();
+            }
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            createStars(300);
+        });
+
+        resize();
+        createStars(300);
+        requestAnimationFrame(drawStars);
+    })();
+
+    // Atualizar ano no rodapé
+    document.addEventListener('DOMContentLoaded', function() {
+        const span = document.getElementById('data-atual');
+        if (span) {
+            const ano = new Date().getFullYear();
+            span.textContent = ano;
+        }
+    });
+</script>
+
+</html>

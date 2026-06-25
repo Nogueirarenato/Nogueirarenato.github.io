@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>9º Ano - Matemática</title>
+
+    <style>
+        /* ===== MESMOS ESTILOS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .preto {
+            background: #0a0a1a;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        #sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .lista,
+        .principal,
+        footer {
+            position: relative;
+            z-index: 2;
+        }
+
+        .lista {
+            padding: 20px 0 10px 0;
+            background: rgba(10, 10, 26, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .lista ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px 25px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lista ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 4px;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .lista ul li a:hover {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+        }
+
+        .lista ul li a[style*="color: #ffd700"] {
+            color: #ffd700 !important;
+            border-bottom-color: #ffd700;
+        }
+
+        .principal-size {
+            min-height: calc(100vh - 280px);
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container-matematica {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 100%;
+        }
+
+        .container-matematica h2 {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #ffffff;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .container-matematica .descricao {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .container-matematica .voltar {
+            grid-column: 1 / -1;
+            display: inline-block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 8px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            justify-self: start;
+            margin-bottom: 10px;
+        }
+
+        .container-matematica .voltar:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .card-matematica {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-matematica::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .card-matematica:hover::before {
+            opacity: 1;
+        }
+
+        .card-matematica:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.25);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-matematica .deco {
+            position: absolute;
+            font-size: 0.6rem;
+            color: rgba(255, 215, 0, 0.12);
+            user-select: none;
+        }
+
+        .card-matematica .deco:nth-child(1) {
+            top: 10px;
+            right: 15px;
+        }
+        .card-matematica .deco:nth-child(2) {
+            bottom: 10px;
+            left: 15px;
+        }
+        .card-matematica .deco:nth-child(3) {
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+        }
+
+        .card-conteudo {
+            text-align: left;
+            min-height: auto;
+        }
+
+        .card-conteudo .titulo-secao {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px dashed rgba(255, 215, 0, 0.12);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-conteudo .titulo-secao .icone {
+            font-size: 1.5rem;
+        }
+
+        .card-conteudo .titulo-secao h3 {
+            color: #ffd700;
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .card-conteudo .titulo-secao .badge {
+            margin-left: auto;
+            background: rgba(255, 215, 0, 0.12);
+            color: #ffd700;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            white-space: nowrap;
+        }
+
+        .card-conteudo .conteudo {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .card-conteudo .conteudo ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .card-conteudo .conteudo ul li {
+            padding: 5px 0 5px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            position: relative;
+        }
+
+        .card-conteudo .conteudo ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+        }
+
+        .card-conteudo .conteudo ul li:last-child {
+            border-bottom: none;
+        }
+
+        .card-conteudo .conteudo ul li a {
+            color: #ffd700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .card-conteudo .conteudo ul li a:hover {
+            text-decoration: underline;
+            color: #ffe44d;
+        }
+
+        .card-conteudo .conteudo .placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+            text-align: center;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 2px dashed rgba(255, 255, 255, 0.06);
+        }
+
+        .card-conteudo .conteudo .placeholder p {
+            margin: 0;
+        }
+
+        .card-conteudo .conteudo .placeholder p:last-child {
+            margin-top: 8px;
+            font-size: 0.85rem;
+        }
+
+        .footer-size {
+            background: rgba(10, 10, 26, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 20px 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding-bottom: 20px;
+        }
+
+        .footer .rodape h3 {
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .footer .rodape p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .footer .rodape a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer .rodape a:hover {
+            color: #ffd700;
+        }
+
+        .devfor {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 992px) {
+            .container-matematica {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 20px 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                text-align: center;
+            }
+            .container-matematica h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container-matematica {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                padding: 15px 12px;
+            }
+            .container-matematica h2 {
+                font-size: 2rem;
+            }
+            .card-matematica {
+                padding: 20px 16px;
+                min-height: auto;
+            }
+            .lista ul {
+                gap: 5px 15px;
+            }
+            .lista ul li a {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="preto" id="ceu">
+        <canvas id="sky"></canvas>
+
+        <div class="lista">
+            <ul>
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../SobreMim/index.html">Sobre Mim</a></li>
+                <li><a href="../../Repositorios/index.html">Repositórios</a></li>
+                <li><a href="../../Aplicacoes/index.html">Aplicações</a></li>
+                <li><a href="../../Matematica/index.html" style="color: #ffd700;">Matemática</a></li>
+            </ul>
+        </div>
+
+        <div class="principal principal-size">
+            <div class="container-matematica">
+
+                <a href="../index.html" class="voltar">← Voltar</a>
+
+                <h2>🧠 9º Ano</h2>
+                <p class="descricao">Funções e probabilidade</p>
+
+                <div class="card-matematica card-conteudo">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <div class="titulo-secao">
+                        <span class="icone">📚</span>
+                        <h3>Conteúdo Programático</h3>
+                        <span class="badge">9º ano</span>
+                    </div>
+                    <div class="conteudo">
+                        <ul>
+                            <li><strong>Funções:</strong> Função do 1º e 2º grau</li>
+                            <li><strong>Probabilidade:</strong> Cálculo e aplicações</li>
+                            <li><strong>Geometria:</strong> Semelhança de figuras</li>
+                            <li><strong>Trigonometria:</strong> Seno, cosseno e tangente</li>
+                            <li><strong>Estatística:</strong> Análise de dados</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-matematica card-conteudo">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <div class="titulo-secao">
+                        <span class="icone">📝</span>
+                        <h3>Atividades</h3>
+                        <span class="badge">Em breve</span>
+                    </div>
+                    <div class="conteudo">
+                        <div class="placeholder">
+                            <p>📌 As atividades estarão disponíveis em breve.</p>
+                            <p>Acesse o conteúdo programático para estudar!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-matematica card-conteudo">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <div class="titulo-secao">
+                        <span class="icone">📖</span>
+                        <h3>Materiais de Apoio</h3>
+                        <span class="badge">Recursos</span>
+                    </div>
+                    <div class="conteudo">
+                        <ul>
+                            <li><a href="#">📄 Apostila 1 - Funções</a></li>
+                            <li><a href="#">📄 Apostila 2 - Probabilidade</a></li>
+                            <li><a href="#">📄 Apostila 3 - Trigonometria</a></li>
+                            <li><a href="#">🎥 Vídeos explicativos</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-matematica card-conteudo">
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <span class="deco">✦</span>
+                    <div class="titulo-secao">
+                        <span class="icone">🔗</span>
+                        <h3>Links Úteis</h3>
+                        <span class="badge">Extras</span>
+                    </div>
+                    <div class="conteudo">
+                        <ul>
+                            <li><a href="#" target="_blank">🔢 Khan Academy - Funções</a></li>
+                            <li><a href="#" target="_blank">🎮 Jogos de Probabilidade</a></li>
+                            <li><a href="#" target="_blank">📊 Simulados Online</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer-size">
+        <div class="footer">
+            <div class="rodape">
+                <h3>Sobre</h3>
+                <p>Ferroviário por destino</p>
+                <p>Professor por vocação</p>
+                <p>Programador por hobbie</p>
+            </div>
+            <div class="rodape">
+                <h3>Contato</h3>
+                <p>renatonogueirasenai@gmail.com</p>
+                <p>Butantã, São Paulo - SP</p>
+                <p>(11) 98146-1081</p>
+            </div>
+            <div class="rodape">
+                <h3>Redes Sociais</h3>
+                <p><a target="_blank" href="https://github.com/Nogueirarenato">GitHub</a></p>
+                <p><a target="_blank" href="https://www.linkedin.com/in/renato-nogueira-b5020131a/">Linkedin</a></p>
+                <p><a target="_blank" href="https://www.facebook.com/renato.nogueira.56027">Facebook</a></p>
+            </div>
+        </div>
+        <div class="devfor">Desenvolvido Por Renato Nogueira 2020 - <span id="data-atual"></span></div>
+    </footer>
+
+</body>
+
+<script>
+    (function() {
+        const canvas = document.getElementById('sky');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function createStars(count) {
+            stars = [];
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.2 + 0.4,
+                    brightness: Math.random() * 0.8 + 0.2,
+                    speed: Math.random() * 0.005 + 0.002
+                });
+            }
+        }
+
+        function drawStars(time) {
+            ctx.clearRect(0, 0, width, height);
+            for (const star of stars) {
+                const flicker = 0.6 + 0.4 * Math.sin(time * star.speed + star.x);
+                const alpha = star.brightness * flicker;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fill();
+            }
+            requestAnimationFrame(drawStars);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            createStars(300);
+        });
+
+        resize();
+        createStars(300);
+        requestAnimationFrame(drawStars);
+    })();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const span = document.getElementById('data-atual');
+        if (span) {
+            span.textContent = new Date().getFullYear();
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Exercícios · Sistema Decimal · 6º ano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f9;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            min-height: 100vh;
+        }
+
+        .paper {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px -12px rgba(0, 20, 30, 0.2);
+            padding: 1.8rem 2rem;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #0a4b7a;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0a2b44;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header h1 small {
+            font-size: 0.85rem;
+            font-weight: 400;
+            background: #d4e2f0;
+            color: #0a3b5e;
+            padding: 0.15rem 0.7rem;
+            border-radius: 40px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #0a4b7a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: #083a5e;
+            transform: scale(1.02);
+        }
+
+        .btn-gabarito {
+            background: #1a7a4b;
+        }
+
+        .btn-gabarito:hover {
+            background: #0f5f3a;
+        }
+
+        .btn-gabarito.ativo {
+            background: #c0392b;
+        }
+
+        .btn-gabarito.ativo:hover {
+            background: #a93226;
+        }
+
+        .info-exercicios {
+            background: #eef6fc;
+            padding: 0.5rem 1.2rem;
+            border-radius: 14px;
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .info-exercicios span {
+            color: #1a2f40;
+        }
+
+        .info-exercicios .badge {
+            background: #0a4b7a;
+            color: white;
+            padding: 0.15rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .exercicios-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem 1.2rem;
+        }
+
+        .exercicio-item {
+            background: #fafcff;
+            border-radius: 14px;
+            padding: 0.8rem 1rem;
+            border: 1px solid #e9edf4;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .exercicio-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 0.3rem;
+        }
+
+        .exercicio-num {
+            background: #0a4b7a;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .exercicio-enunciado {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #1a2f40;
+        }
+
+        .exercicio-enunciado strong {
+            color: #0a3b5e;
+        }
+
+        .espaco-resposta {
+            margin-top: 0.4rem;
+            padding-top: 0.3rem;
+            border-top: 1px dashed #d2dce8;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.3rem 0.6rem;
+        }
+
+        .espaco-resposta .linha {
+            display: inline-block;
+            width: 100px;
+            border-bottom: 1px solid #b6cfe0;
+            min-height: 1.4rem;
+        }
+
+        .espaco-resposta .linha-longa {
+            width: 160px;
+        }
+
+        .gabarito-resposta {
+            display: none;
+            background: #e8f5e9;
+            padding: 0.2rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1a5e2a;
+            border-left: 3px solid #2e7d32;
+            margin-top: 0.2rem;
+            width: 100%;
+        }
+
+        .gabarito-resposta.visivel {
+            display: block;
+        }
+
+        .gabarito-resposta .label {
+            font-weight: 400;
+            color: #2e4a3a;
+            margin-right: 4px;
+        }
+
+        footer {
+            margin-top: 1.2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #4b637a;
+            border-top: 1px solid #d2dce8;
+            padding-top: 0.8rem;
+        }
+
+        /* ========== IMPRESSÃO A4 ========== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+                display: block;
+            }
+
+            .paper {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0.4cm 0.5cm;
+                max-width: 100%;
+                width: 100%;
+                margin: 0;
+            }
+
+            .header-actions .btn {
+                display: none !important;
+            }
+
+            .header {
+                border-bottom-width: 1.5px;
+                margin-bottom: 0.6rem;
+                padding-bottom: 0.3rem;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .header h1 small {
+                font-size: 0.7rem;
+                padding: 0.1rem 0.5rem;
+            }
+
+            .info-exercicios {
+                padding: 0.3rem 0.8rem;
+                margin-bottom: 0.6rem;
+                font-size: 0.75rem;
+                background: #f0f6fc !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .info-exercicios .badge {
+                font-size: 0.65rem;
+                padding: 0.1rem 0.6rem;
+                background: #0a4b7a !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .exercicios-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem 0.8rem;
+            }
+
+            .exercicio-item {
+                padding: 0.5rem 0.6rem;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                background: white;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .exercicio-num {
+                width: 20px;
+                height: 20px;
+                font-size: 0.65rem;
+                background: #0a4b7a !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .exercicio-enunciado {
+                font-size: 0.78rem;
+                line-height: 1.4;
+            }
+
+            .espaco-resposta {
+                margin-top: 0.2rem;
+                padding-top: 0.2rem;
+                border-top: 1px dashed #aaa;
+            }
+
+            .espaco-resposta .linha {
+                width: 60px;
+                border-bottom: 1px solid #888;
+            }
+
+            .espaco-resposta .linha-longa {
+                width: 100px;
+            }
+
+            .gabarito-resposta {
+                display: block !important;
+                background: #f0faf0 !important;
+                border-left: 2px solid #2e7d32 !important;
+                font-size: 0.7rem;
+                padding: 0.15rem 0.5rem;
+                margin-top: 0.15rem;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .gabarito-resposta .label {
+                font-weight: 600;
+            }
+
+            footer {
+                margin-top: 0.6rem;
+                padding-top: 0.4rem;
+                font-size: 0.65rem;
+                border-top: 1px solid #ccc;
+            }
+
+            /* Força a quebra correta para caber em uma folha */
+            .exercicios-grid {
+                page-break-inside: avoid;
+            }
+
+            /* Ajuste fino para caber em A4 retrato */
+            .paper {
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .exercicios-grid {
+                grid-template-columns: 1fr;
+            }
+            .paper {
+                padding: 1rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.5rem;
+            }
+            .header h1 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media print and (max-width: 650px) {
+            .exercicios-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper" id="conteudoParaImprimir">
+        <div class="header">
+            <h1>
+                📝 Lista de Exercícios
+                <small>Sistema Decimal</small>
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-gabarito" id="toggleGabaritoBtn" onclick="toggleGabarito()">
+                    📖 Gabarito
+                </button>
+                <button class="btn" onclick="imprimirPagina()">
+                    🖨️ Imprimir
+                </button>
+            </div>
+        </div>
+
+        <div class="info-exercicios">
+            <span>🔢 <strong>Números Naturais</strong> — Sequência · Reta · Comparação · Ordenação</span>
+            <span class="badge">10 exercícios</span>
+        </div>
+
+        <div class="exercicios-grid" id="exerciciosLista">
+            <!-- 1 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">1</div>
+                    <div class="exercicio-enunciado">
+                        Qual é o sucessor do número <strong>1.499</strong>?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha"></span></span>
+                    <div class="gabarito-resposta" data-resposta="1.500">
+                        <span class="label">✅</span> 1.500
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">2</div>
+                    <div class="exercicio-enunciado">
+                        Qual é o antecessor do número <strong>2.000</strong>?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha"></span></span>
+                    <div class="gabarito-resposta" data-resposta="1.999">
+                        <span class="label">✅</span> 1.999
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">3</div>
+                    <div class="exercicio-enunciado">
+                        Na reta numérica, o número <strong>8</strong> está à <u>esquerda</u> ou à <u>direita</u> do número <strong>3</strong>?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha" style="width:80px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="Direita">
+                        <span class="label">✅</span> Direita (8 é maior que 3)
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">4</div>
+                    <div class="exercicio-enunciado">
+                        Compare os números usando <strong>&gt;</strong>, <strong>&lt;</strong> ou <strong>=</strong>: <br>
+                        <strong>347</strong> ____ <strong>374</strong>
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha" style="width:40px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="&lt;">
+                        <span class="label">✅</span> 347 &lt; 374
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">5</div>
+                    <div class="exercicio-enunciado">
+                        Compare os números usando <strong>&gt;</strong>, <strong>&lt;</strong> ou <strong>=</strong>: <br>
+                        <strong>2.851</strong> ____ <strong>2.815</strong>
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha" style="width:40px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="&gt;">
+                        <span class="label">✅</span> 2.851 &gt; 2.815
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">6</div>
+                    <div class="exercicio-enunciado">
+                        Compare os números usando <strong>&gt;</strong>, <strong>&lt;</strong> ou <strong>=</strong>: <br>
+                        <strong>999</strong> ____ <strong>1.000</strong>
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha" style="width:40px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="&lt;">
+                        <span class="label">✅</span> 999 &lt; 1.000
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">7</div>
+                    <div class="exercicio-enunciado">
+                        Escreva os números em <strong>ordem crescente</strong>: <br>
+                        <strong>57, 23, 89, 12, 45</strong>
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-longa"></span></span>
+                    <div class="gabarito-resposta" data-resposta="12, 23, 45, 57, 89">
+                        <span class="label">✅</span> 12, 23, 45, 57, 89
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">8</div>
+                    <div class="exercicio-enunciado">
+                        Escreva os números em <strong>ordem decrescente</strong>: <br>
+                        <strong>305, 530, 350, 503, 035</strong>
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-longa"></span></span>
+                    <div class="gabarito-resposta" data-resposta="530, 503, 350, 305, 35">
+                        <span class="label">✅</span> 530, 503, 350, 305, 35
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">9</div>
+                    <div class="exercicio-enunciado">
+                        Quantos números naturais existem entre <strong>5</strong> e <strong>12</strong> (excluindo os extremos)?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha" style="width:40px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="6">
+                        <span class="label">✅</span> 6 números (6, 7, 8, 9, 10, 11)
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">10</div>
+                    <div class="exercicio-enunciado">
+                        Observe a reta numérica: <br>
+                        0 — 2 — 4 — ___ — 8 — 10 <br>
+                        Que número falta no espaço?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha" style="width:40px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="6">
+                        <span class="label">✅</span> 6 (pula de 2 em 2)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            ✦ Matemática · 6º ano · Sistema Decimal · Lista de Exercícios ✦
+        </footer>
+    </div>
+
+    <script>
+        function imprimirPagina() {
+            window.print();
+        }
+
+        let gabaritoVisivel = false;
+
+        function toggleGabarito() {
+            gabaritoVisivel = !gabaritoVisivel;
+            const respostas = document.querySelectorAll('.gabarito-resposta');
+            const btn = document.getElementById('toggleGabaritoBtn');
+
+            respostas.forEach(el => {
+                el.classList.toggle('visivel', gabaritoVisivel);
+            });
+
+            if (gabaritoVisivel) {
+                btn.textContent = '🙈 Ocultar';
+                btn.classList.add('ativo');
+            } else {
+                btn.textContent = '📖 Gabarito';
+                btn.classList.remove('ativo');
+            }
+        }
+
+        // Inicializa com gabarito oculto (na impressão será visível via CSS)
+        document.addEventListener('DOMContentLoaded', function() {
+            const respostas = document.querySelectorAll('.gabarito-resposta');
+            respostas.forEach(el => el.classList.remove('visivel'));
+        });
+    </script>
+</body>
+</html>

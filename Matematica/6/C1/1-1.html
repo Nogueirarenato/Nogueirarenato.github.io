@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas de Numeração · 6º ano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f9;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .paper {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 30, 0.25);
+            padding: 2.5rem 2.8rem;
+            transition: 0.2s;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #0a4b7a;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a2b44;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d4e2f0;
+            color: #0a3b5e;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            margin-left: 12px;
+        }
+
+        .print-btn {
+            background: #0a4b7a;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.8rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(10, 75, 122, 0.2);
+            transition: 0.15s;
+        }
+
+        .print-btn:hover {
+            background: #083a5e;
+            transform: scale(1.02);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .intro-geral {
+            background: #eef6fc;
+            padding: 1.6rem 2rem;
+            border-radius: 28px;
+            border-left: 6px solid #0a4b7a;
+        }
+
+        .intro-geral p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #1a2f40;
+        }
+
+        .sistemas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .sistema-card {
+            background: #fafcff;
+            border-radius: 24px;
+            padding: 1.5rem 1.8rem;
+            border: 1px solid #e9edf4;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: 0.1s;
+            break-inside: avoid;
+        }
+
+        .sistema-card h2 {
+            font-size: 1.5rem;
+            color: #0a3b5e;
+            border-bottom: 2px dashed #b6d0e6;
+            padding-bottom: 0.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sistema-card h2 .emoji {
+            font-size: 1.6rem;
+        }
+
+        .sistema-card p, .sistema-card ul {
+            color: #1e3347;
+            line-height: 1.7;
+            font-size: 1.02rem;
+        }
+
+        .sistema-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .sistema-card ul li {
+            padding: 0.4rem 0 0.4rem 1.8rem;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%230a4b7a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>') left center no-repeat;
+            background-size: 1.2rem;
+        }
+
+        .exemplo-box {
+            background: #e3effa;
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            margin: 0.8rem 0 0.2rem;
+            font-weight: 500;
+            color: #003153;
+            font-size: 1rem;
+        }
+
+        .exemplo-box code {
+            background: white;
+            padding: 0.1rem 0.6rem;
+            border-radius: 8px;
+            font-weight: 700;
+            color: #0a4b7a;
+        }
+
+        .decimal-destaque {
+            background: #dcebf8;
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            margin-top: 0.8rem;
+            border: 2px solid #0a4b7a20;
+        }
+
+        .decimal-destaque h2 {
+            font-size: 1.8rem;
+            color: #0a2b44;
+            margin-bottom: 0.5rem;
+        }
+
+        .pos-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            margin: 0.8rem 0;
+        }
+
+        .pos-table th {
+            background: #0a4b7a;
+            color: white;
+            font-weight: 600;
+            padding: 0.8rem 0.2rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .pos-table td {
+            padding: 0.8rem 0.2rem;
+            text-align: center;
+            border-bottom: 1px solid #dfe8f0;
+            font-size: 1.1rem;
+        }
+
+        .pos-table .highlight-row {
+            background: #e3effa;
+            font-weight: 600;
+        }
+
+        .interact-box {
+            background: #e4eefa;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            margin-top: 1rem;
+        }
+
+        .interact-box h3 {
+            font-size: 1.4rem;
+            color: #0a2b44;
+            margin-bottom: 0.75rem;
+        }
+
+        .interact-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem 0.8rem;
+        }
+
+        .interact-row label {
+            font-weight: 500;
+            color: #144a6e;
+        }
+
+        .interact-row input {
+            padding: 0.6rem 1rem;
+            border-radius: 60px;
+            border: 1px solid #b6cfe0;
+            font-size: 1.1rem;
+            width: 160px;
+            outline: none;
+            transition: 0.15s;
+        }
+
+        .interact-row input:focus {
+            border-color: #0a4b7a;
+            box-shadow: 0 0 0 3px rgba(10, 75, 122, 0.2);
+        }
+
+        .interact-row button {
+            background: #0a4b7a;
+            border: none;
+            color: white;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .interact-row button:hover {
+            background: #063453;
+        }
+
+        .result-box {
+            margin-top: 1.2rem;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 60px;
+            border-left: 6px solid #0a4b7a;
+            font-size: 1.2rem;
+            min-height: 3.8rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.2rem;
+        }
+
+        .conversor-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .conversor-item {
+            background: white;
+            border-radius: 18px;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .conversor-item h4 {
+            color: #0a3b5e;
+            margin-bottom: 0.6rem;
+        }
+
+        .conversor-item input {
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #b6cfe0;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 200px;
+            outline: none;
+        }
+
+        .conversor-item input:focus {
+            border-color: #0a4b7a;
+        }
+
+        .conversor-item .result-conv {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: #0a4b7a;
+            font-size: 1.05rem;
+        }
+
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4b637a;
+            border-top: 1px solid #d2dce8;
+            padding-top: 1.5rem;
+        }
+
+        .legenda {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 0.5rem 0 0.2rem;
+            font-size: 0.95rem;
+            color: #1d3b53;
+        }
+
+        .legenda span::before {
+            content: "●";
+            margin-right: 6px;
+            color: #0a4b7a;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0.5cm;
+                margin: 0;
+            }
+            .paper {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0.3cm 0.6cm;
+                max-width: 100%;
+            }
+            .print-btn {
+                display: none !important;
+            }
+            .sistemas-grid {
+                display: block;
+            }
+            .sistema-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 1.2rem;
+                border: 1px solid #ccc;
+            }
+            .interact-box {
+                break-inside: avoid;
+                background: #f0f6fd;
+            }
+            .intro-geral {
+                background: #f0f6fc;
+            }
+            .pos-table th {
+                background: #0a4b7a !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .conversor-box {
+                display: block;
+            }
+            .conversor-item {
+                margin-bottom: 0.8rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .paper {
+                padding: 1.5rem;
+            }
+            .conversor-box {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.8rem;
+            }
+            .interact-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .interact-row input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper" id="conteudoParaImprimir">
+        <div class="header">
+            <h1>
+                🧮 Sistemas de Numeração
+                <small>6º ano</small>
+            </h1>
+            <button class="print-btn" onclick="imprimirPagina()">
+                🖨️ Imprimir A4
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- Introdução geral -->
+            <div class="intro-geral">
+                <p><strong>📌 O que é um sistema de numeração?</strong> É um conjunto de regras, símbolos e operações usado para representar quantidades. Diferentes civilizações criaram seus próprios sistemas ao longo da história. Vamos conhecer alguns deles!</p>
+            </div>
+
+            <!-- Grid com os sistemas -->
+            <div class="sistemas-grid">
+                <!-- BINÁRIO -->
+                <div class="sistema-card">
+                    <h2><span class="emoji">💻</span> Binário</h2>
+                    <p>Utilizado em computadores, usa apenas <strong>dois dígitos</strong>: 0 e 1. Cada posição representa uma potência de 2.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplo:</strong> <code>1011₂</code> = 1×2³ + 0×2² + 1×2¹ + 1×2⁰ = 8 + 0 + 2 + 1 = <strong>11</strong> (decimal)
+                    </div>
+                    <ul>
+                        <li>Base 2</li>
+                        <li>Dígitos: 0, 1</li>
+                        <li>Usado em eletrônica digital</li>
+                    </ul>
+                </div>
+
+                <!-- ROMANO -->
+                <div class="sistema-card">
+                    <h2><span class="emoji">🏛️</span> Romano</h2>
+                    <p>Usado no Império Romano, utiliza letras maiúsculas com valores fixos: I, V, X, L, C, D, M.</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplo:</strong> <code>XXIV</code> = X + X + IV = 10 + 10 + 4 = <strong>24</strong>
+                    </div>
+                    <ul>
+                        <li>I=1, V=5, X=10, L=50</li>
+                        <li>C=100, D=500, M=1000</li>
+                        <li>Regra subtrativa (IV=4, IX=9)</li>
+                    </ul>
+                </div>
+
+                <!-- MAIA -->
+                <div class="sistema-card">
+                    <h2><span class="emoji">🌿</span> Maia</h2>
+                    <p>Os maias usavam um sistema <strong>vigesimal</strong> (base 20) com símbolos: ponto (1), traço (5) e uma concha (0).</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplo:</strong> ••• (3) · — (5+2=7) · — (5+3=8)
+                    </div>
+                    <ul>
+                        <li>Base 20</li>
+                        <li>Usava posições verticais</li>
+                        <li>Inventaram o zero</li>
+                    </ul>
+                </div>
+
+                <!-- BABILÔNICO -->
+                <div class="sistema-card">
+                    <h2><span class="emoji">🏺</span> Babilônico</h2>
+                    <p>Os babilônios usavam um sistema <strong>sexagesimal</strong> (base 60) com dois símbolos: cunha vertical (1) e horizontal (10).</p>
+                    <div class="exemplo-box">
+                        <strong>Exemplo:</strong> 1,5 = 1×60 + 5 = <strong>65</strong> (decimal)
+                    </div>
+                    <ul>
+                        <li>Base 60</li>
+                        <li>Influenciou horas e graus</li>
+                        <li>Posicional com lacunas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sistema Decimal (nosso) -->
+            <div class="decimal-destaque">
+                <h2>🔢 Sistema Decimal (nosso sistema)</h2>
+                <p>Usamos o sistema <strong>decimal</strong> (base 10), com 10 algarismos: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. <br>O valor de cada dígito depende da sua <strong>posição</strong> (unidade, dezena, centena, milhar...).</p>
+                
+                <table class="pos-table">
+                    <thead>
+                        <tr><th>Milhar</th><th>Centena</th><th>Dezena</th><th>Unidade</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>3</td><td>8</td><td>2</td><td>5</td></tr>
+                        <tr class="highlight-row"><td>3 × 1000</td><td>8 × 100</td><td>2 × 10</td><td>5 × 1</td></tr>
+                        <tr><td>3000</td><td>800</td><td>20</td><td>5</td></tr>
+                    </tbody>
+                </table>
+                <div class="legenda">
+                    <span><strong>3 825</strong> = 3000 + 800 + 20 + 5</span>
+                    <span>🔹 8 está na centena → vale 800</span>
+                </div>
+            </div>
+
+            <!-- Interatividade: conversor e decomposição -->
+            <div class="interact-box">
+                <h3>🧪 Experimente!</h3>
+                
+                <!-- Decomposição decimal -->
+                <div style="margin-bottom: 1.2rem;">
+                    <div class="interact-row">
+                        <label for="numeroInput">Decomponha um número (0-9999):</label>
+                        <input type="number" id="numeroInput" value="472" min="0" max="9999" step="1">
+                        <button id="decomporBtn">Decompor</button>
+                    </div>
+                    <div class="result-box" id="resultadoDecomposicao">
+                        <span>🔍 <strong>4 7 2</strong>  →  400 + 70 + 2</span>
+                    </div>
+                </div>
+
+                <!-- Conversores -->
+                <div class="conversor-box">
+                    <div class="conversor-item">
+                        <h4>🔁 Decimal → Binário</h4>
+                        <input type="number" id="decToBin" value="11" min="0" max="255">
+                        <button onclick="converterDecBin()" style="margin-top: 0.4rem; background: #0a4b7a; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 40px; cursor: pointer;">Converter</button>
+                        <div class="result-conv" id="resultDecBin">1011₂</div>
+                    </div>
+                    <div class="conversor-item">
+                        <h4>🔁 Decimal → Romano</h4>
+                        <input type="number" id="decToRoman" value="24" min="1" max="3999">
+                        <button onclick="converterDecRoman()" style="margin-top: 0.4rem; background: #0a4b7a; color: white; border: none; padding: 0.4rem 1.2rem; border-radius: 40px; cursor: pointer;">Converter</button>
+                        <div class="result-conv" id="resultDecRoman">XXIV</div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                ✦ Matemática · 6º ano · Sistemas de Numeração ✦
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Impressão
+        function imprimirPagina() {
+            window.print();
+        }
+
+        // Decomposição decimal
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('numeroInput');
+            const btn = document.getElementById('decomporBtn');
+            const resultDiv = document.getElementById('resultadoDecomposicao');
+
+            function decomporNumero(num) {
+                if (num < 0) num = 0;
+                if (num > 9999) num = 9999;
+                const str = String(num).padStart(4, '0');
+                const milhar = parseInt(str[0]);
+                const centena = parseInt(str[1]);
+                const dezena = parseInt(str[2]);
+                const unidade = parseInt(str[3]);
+
+                const partes = [];
+                if (milhar !== 0) partes.push(`${milhar}×1000 = ${milhar * 1000}`);
+                if (centena !== 0) partes.push(`${centena}×100 = ${centena * 100}`);
+                if (dezena !== 0) partes.push(`${dezena}×10 = ${dezena * 10}`);
+                if (unidade !== 0) partes.push(`${unidade}×1 = ${unidade * 1}`);
+                if (partes.length === 0) return '0 → zero';
+
+                const soma = partes.map(p => p.split('=')[1].trim()).join(' + ');
+                return `<strong>${Number(num).toLocaleString('pt-BR')}</strong>  →  ${soma}`;
+            }
+
+            function atualizarDecomposicao() {
+                let val = parseInt(input.value, 10);
+                if (isNaN(val)) val = 0;
+                if (val < 0) val = 0;
+                if (val > 9999) val = 9999;
+                input.value = val;
+                resultDiv.innerHTML = `🧮 ${decomporNumero(val)}`;
+            }
+
+            btn.addEventListener('click', atualizarDecomposicao);
+            input.addEventListener('keyup', (e) => { if (e.key === 'Enter') atualizarDecomposicao(); });
+            input.addEventListener('blur', atualizarDecomposicao);
+            atualizarDecomposicao();
+        });
+
+        // Conversor Decimal → Binário
+        function converterDecBin() {
+            const input = document.getElementById('decToBin');
+            let val = parseInt(input.value, 10);
+            if (isNaN(val) || val < 0) val = 0;
+            if (val > 255) val = 255;
+            input.value = val;
+            const bin = val.toString(2);
+            document.getElementById('resultDecBin').textContent = bin + '₂';
+        }
+
+        // Conversor Decimal → Romano
+        function converterDecRoman() {
+            const input = document.getElementById('decToRoman');
+            let num = parseInt(input.value, 10);
+            if (isNaN(num) || num < 1) num = 1;
+            if (num > 3999) num = 3999;
+            input.value = num;
+
+            const romanos = [
+                { valor: 1000, simbolo: 'M' },
+                { valor: 900, simbolo: 'CM' },
+                { valor: 500, simbolo: 'D' },
+                { valor: 400, simbolo: 'CD' },
+                { valor: 100, simbolo: 'C' },
+                { valor: 90, simbolo: 'XC' },
+                { valor: 50, simbolo: 'L' },
+                { valor: 40, simbolo: 'XL' },
+                { valor: 10, simbolo: 'X' },
+                { valor: 9, simbolo: 'IX' },
+                { valor: 5, simbolo: 'V' },
+                { valor: 4, simbolo: 'IV' },
+                { valor: 1, simbolo: 'I' }
+            ];
+
+            let resultado = '';
+            for (const r of romanos) {
+                while (num >= r.valor) {
+                    resultado += r.simbolo;
+                    num -= r.valor;
+                }
+            }
+            document.getElementById('resultDecRoman').textContent = resultado || '—';
+        }
+
+        // Inicializa conversores
+        document.addEventListener('DOMContentLoaded', function() {
+            converterDecBin();
+            converterDecRoman();
+        });
+    </script>
+</body>
+</html>

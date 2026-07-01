@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Decimal · Números Naturais · 6º ano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f9;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .paper {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 30, 0.25);
+            padding: 2.5rem 2.8rem;
+            transition: 0.2s;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #0a4b7a;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a2b44;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d4e2f0;
+            color: #0a3b5e;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            margin-left: 12px;
+        }
+
+        .print-btn {
+            background: #0a4b7a;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.8rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(10, 75, 122, 0.2);
+            transition: 0.15s;
+        }
+
+        .print-btn:hover {
+            background: #083a5e;
+            transform: scale(1.02);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* Introdução */
+        .intro-box {
+            background: #eef6fc;
+            padding: 1.6rem 2rem;
+            border-radius: 28px;
+            border-left: 6px solid #0a4b7a;
+        }
+
+        .intro-box p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: #1a2f40;
+        }
+
+        .intro-box strong {
+            color: #0a3b5e;
+        }
+
+        /* Seções */
+        .topic-section {
+            background: #fafcff;
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            border: 1px solid #e9edf4;
+            break-inside: avoid;
+        }
+
+        .topic-section h2 {
+            font-size: 1.8rem;
+            color: #0a3b5e;
+            border-bottom: 2px dashed #b6d0e6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topic-section h2 .emoji {
+            font-size: 1.8rem;
+        }
+
+        .topic-section p {
+            font-size: 1.08rem;
+            line-height: 1.7;
+            color: #1e3347;
+            margin-bottom: 0.8rem;
+        }
+
+        .topic-section ul, .topic-section ol {
+            padding-left: 1.8rem;
+            margin: 0.6rem 0 0.8rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #1e3347;
+        }
+
+        .topic-section ul li, .topic-section ol li {
+            margin-bottom: 0.2rem;
+        }
+
+        .topic-section ul {
+            list-style-type: disc;
+        }
+
+        .highlight-box {
+            background: #e3effa;
+            border-radius: 18px;
+            padding: 1.2rem 1.8rem;
+            margin: 1rem 0 0.5rem;
+            border-left: 4px solid #0a4b7a;
+        }
+
+        .highlight-box strong {
+            color: #0a3b5e;
+        }
+
+        .highlight-box .exemplo {
+            display: block;
+            font-weight: 600;
+            color: #003f6b;
+            font-size: 1.2rem;
+            margin-top: 0.3rem;
+        }
+
+        /* Reta Numérica */
+        .reta-container {
+            background: white;
+            padding: 1.5rem 0.5rem;
+            border-radius: 18px;
+            margin: 0.8rem 0;
+            overflow-x: auto;
+            border: 1px solid #d2dce8;
+        }
+
+        .reta-svg {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .reta-legenda {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0 0;
+            font-size: 0.95rem;
+            color: #1d3b53;
+        }
+
+        .reta-legenda span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .reta-legenda .cor-reta {
+            display: inline-block;
+            width: 20px;
+            height: 4px;
+            background: #0a4b7a;
+            border-radius: 4px;
+        }
+
+        .reta-legenda .cor-ponto {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #c0392b;
+            border-radius: 50%;
+        }
+
+        /* Comparação */
+        .comparacao-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin: 0.8rem 0;
+        }
+
+        .comparacao-item {
+            background: #f3f8ff;
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+            border: 1px solid #dce8f4;
+        }
+
+        .comparacao-item .simbolo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a4b7a;
+            display: block;
+        }
+
+        .comparacao-item .desc {
+            font-size: 1rem;
+            color: #1a2f40;
+            margin-top: 0.2rem;
+        }
+
+        .comparacao-item .exemplo-comp {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #003f6b;
+            margin-top: 0.3rem;
+        }
+
+        /* Ordenação */
+        .ordenacao-exemplo {
+            background: #f3f8ff;
+            border-radius: 18px;
+            padding: 1rem 1.8rem;
+            margin: 0.8rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.8rem 1.5rem;
+        }
+
+        .ordenacao-exemplo .seta {
+            font-size: 1.8rem;
+            color: #0a4b7a;
+        }
+
+        .ordenacao-exemplo .num {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0a3b5e;
+            background: white;
+            padding: 0.2rem 1rem;
+            border-radius: 12px;
+            border: 1px solid #b6d0e6;
+        }
+
+        .dica-box {
+            background: #fef9e7;
+            border-radius: 18px;
+            padding: 1rem 1.8rem;
+            border-left: 4px solid #f1c40f;
+            margin: 0.8rem 0;
+        }
+
+        .dica-box strong {
+            color: #7d6608;
+        }
+
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4b637a;
+            border-top: 1px solid #d2dce8;
+            padding-top: 1.5rem;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0.3cm;
+                margin: 0;
+            }
+            .paper {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0.3cm 0.6cm;
+                max-width: 100%;
+            }
+            .print-btn {
+                display: none !important;
+            }
+            .topic-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #ccc;
+                background: white;
+            }
+            .intro-box {
+                background: #f0f6fc !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .highlight-box {
+                background: #e3effa !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .comparacao-item {
+                background: #f3f8ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .ordenacao-exemplo {
+                background: #f3f8ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .dica-box {
+                background: #fef9e7 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .reta-container {
+                border: 1px solid #aaa;
+            }
+            .reta-legenda .cor-reta {
+                background: #0a4b7a !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .reta-legenda .cor-ponto {
+                background: #c0392b !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .paper {
+                padding: 1.5rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.8rem;
+            }
+            .header h1 {
+                font-size: 1.6rem;
+                flex-wrap: wrap;
+            }
+            .comparacao-grid {
+                grid-template-columns: 1fr;
+            }
+            .topic-section {
+                padding: 1.2rem;
+            }
+            .topic-section h2 {
+                font-size: 1.4rem;
+            }
+            .ordenacao-exemplo {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper" id="conteudoParaImprimir">
+        <div class="header">
+            <h1>
+                🔢 Sistema Decimal
+                <small>6º ano · Teoria</small>
+            </h1>
+            <button class="print-btn" onclick="imprimirPagina()">
+                🖨️ Imprimir A4
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- Introdução -->
+            <div class="intro-box">
+                <p><strong>📌 Os Números Naturais</strong> são os números que usamos para contar: 0, 1, 2, 3, 4, 5, ... Eles fazem parte do nosso dia a dia e são a base da matemática. Vamos estudar como eles se organizam, como compará-los e como ordená-los.</p>
+            </div>
+
+            <!-- SEÇÃO 1: SEQUÊNCIA DOS NÚMEROS NATURAIS -->
+            <div class="topic-section">
+                <h2><span class="emoji">🔢</span> Sequência dos Números Naturais</h2>
+                <p>Os números naturais formam uma <strong>sequência infinita</strong> que começa no 0 (ou no 1, dependendo da definição) e vai aumentando de 1 em 1, sem nunca terminar.</p>
+                
+                <div class="highlight-box">
+                    <strong>Sequência:</strong>
+                    <span class="exemplo">0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, ...</span>
+                </div>
+
+                <p><strong>Características importantes:</strong></p>
+                <ul>
+                    <li><strong>Sucessor:</strong> O sucessor de um número natural é ele mesmo + 1. Ex: sucessor de 7 é 8.</li>
+                    <li><strong>Antecessor:</strong> O antecessor de um número natural é ele mesmo - 1 (exceto para o 0). Ex: antecessor de 10 é 9.</li>
+                    <li><strong>Infinito:</strong> A sequência não tem fim. Sempre existe um número maior.</li>
+                    <li><strong>Números pares e ímpares:</strong> Alternam-se na sequência: par, ímpar, par, ímpar, ...</li>
+                </ul>
+
+                <div class="dica-box">
+                    💡 <strong>Dica:</strong> O 0 é o único número natural que não possui antecessor natural.
+                </div>
+            </div>
+
+            <!-- SEÇÃO 2: RETA NUMÉRICA -->
+            <div class="topic-section">
+                <h2><span class="emoji">📏</span> Reta Numérica</h2>
+                <p>A <strong>reta numérica</strong> é uma representação visual dos números naturais em uma linha reta, onde cada número ocupa uma posição específica e igualmente espaçada.</p>
+
+                <div class="reta-container">
+                    <svg class="reta-svg" viewBox="0 0 900 120" preserveAspectRatio="xMidYMid meet">
+                        <!-- Linha principal -->
+                        <line x1="40" y1="60" x2="860" y2="60" stroke="#0a4b7a" stroke-width="3" />
+                        <!-- Seta à direita -->
+                        <polygon points="860,55 875,60 860,65" fill="#0a4b7a" />
+                        <!-- Seta à esquerda (opcional, mas mostra infinito) -->
+                        <polygon points="40,55 25,60 40,65" fill="#0a4b7a" />
+
+                        <!-- Marcadores de 0 a 10 -->
+                        <!-- 0 -->
+                        <line x1="80" y1="50" x2="80" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="80" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">0</text>
+                        <circle cx="80" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 1 -->
+                        <line x1="160" y1="50" x2="160" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="160" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">1</text>
+                        <circle cx="160" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 2 -->
+                        <line x1="240" y1="50" x2="240" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="240" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">2</text>
+                        <circle cx="240" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 3 -->
+                        <line x1="320" y1="50" x2="320" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="320" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">3</text>
+                        <circle cx="320" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 4 -->
+                        <line x1="400" y1="50" x2="400" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="400" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">4</text>
+                        <circle cx="400" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 5 -->
+                        <line x1="480" y1="50" x2="480" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="480" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">5</text>
+                        <circle cx="480" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 6 -->
+                        <line x1="560" y1="50" x2="560" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="560" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">6</text>
+                        <circle cx="560" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 7 -->
+                        <line x1="640" y1="50" x2="640" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="640" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">7</text>
+                        <circle cx="640" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 8 -->
+                        <line x1="720" y1="50" x2="720" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="720" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">8</text>
+                        <circle cx="720" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- 9 -->
+                        <line x1="800" y1="50" x2="800" y2="70" stroke="#0a4b7a" stroke-width="2" />
+                        <text x="800" y="90" text-anchor="middle" font-size="16" font-weight="600" fill="#0a3b5e">9</text>
+                        <circle cx="800" cy="60" r="5" fill="#c0392b" />
+
+                        <!-- Pontilhado indicando continuação -->
+                        <text x="840" y="66" font-size="20" fill="#4b637a">...</text>
+                    </svg>
+                </div>
+
+                <div class="reta-legenda">
+                    <span><span class="cor-reta"></span> Reta numérica</span>
+                    <span><span class="cor-ponto"></span> Pontos representando números</span>
+                    <span>⬅️ ➡️ A reta é infinita</span>
+                </div>
+
+                <p><strong>Como usar a reta numérica:</strong></p>
+                <ul>
+                    <li>Os números crescem da <strong>esquerda para a direita</strong>.</li>
+                    <li>A distância entre cada número é sempre a mesma (espaçamento uniforme).</li>
+                    <li>O 0 está à esquerda e os números positivos à direita.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Exemplo:</strong> O número 5 está à direita do 3 e à esquerda do 7. Quanto maior o número, mais à direita ele está.
+                </div>
+            </div>
+
+            <!-- SEÇÃO 3: COMPARAÇÃO DE NÚMEROS NATURAIS -->
+            <div class="topic-section">
+                <h2><span class="emoji">⚖️</span> Comparação de Números Naturais</h2>
+                <p>Para comparar dois números naturais, verificamos qual deles é <strong>maior</strong>, <strong>menor</strong> ou se são <strong>iguais</strong>. Usamos símbolos específicos:</p>
+
+                <div class="comparacao-grid">
+                    <div class="comparacao-item">
+                        <span class="simbolo">&gt;</span>
+                        <span class="desc"><strong>Maior que</strong></span>
+                        <span class="exemplo-comp">5 &gt; 3</span>
+                        <span style="font-size:0.9rem; color:#1a2f40;">(5 é maior que 3)</span>
+                    </div>
+                    <div class="comparacao-item">
+                        <span class="simbolo">&lt;</span>
+                        <span class="desc"><strong>Menor que</strong></span>
+                        <span class="exemplo-comp">3 &lt; 5</span>
+                        <span style="font-size:0.9rem; color:#1a2f40;">(3 é menor que 5)</span>
+                    </div>
+                    <div class="comparacao-item">
+                        <span class="simbolo">=</span>
+                        <span class="desc"><strong>Igual a</strong></span>
+                        <span class="exemplo-comp">4 = 4</span>
+                        <span style="font-size:0.9rem; color:#1a2f40;">(4 é igual a 4)</span>
+                    </div>
+                </div>
+
+                <p><strong>Como comparar números com vários dígitos:</strong></p>
+                <ul>
+                    <li><strong>1º:</strong> Compare a quantidade de algarismos. Quem tem <strong>mais algarismos</strong> é maior. Ex: 845 &gt; 99 (3 dígitos &gt; 2 dígitos).</li>
+                    <li><strong>2º:</strong> Se tiverem a mesma quantidade, compare os algarismos da <strong>esquerda para a direita</strong> (maior ordem). Ex: 845 &gt; 823 (8=8, 4&gt;2).</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Dica da boca do jacaré:</strong> 🐊 O símbolo &gt; ou &lt; sempre "abre" para o número maior!
+                    <span class="exemplo">7 &gt; 3  →  a boca do jacaré come o 7</span>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 4: ORDENAÇÃO DE NÚMEROS NATURAIS -->
+            <div class="topic-section">
+                <h2><span class="emoji">📊</span> Ordenação de Números Naturais</h2>
+                <p>Ordenar números significa organizá-los em uma sequência, podendo ser de duas formas:</p>
+
+                <ul>
+                    <li><strong>Ordem crescente:</strong> do menor para o maior (⬆️).</li>
+                    <li><strong>Ordem decrescente:</strong> do maior para o menor (⬇️).</li>
+                </ul>
+
+                <div class="ordenacao-exemplo">
+                    <span style="font-weight:600;">Crescente:</span>
+                    <span class="num">12</span>
+                    <span class="seta">→</span>
+                    <span class="num">35</span>
+                    <span class="seta">→</span>
+                    <span class="num">47</span>
+                    <span class="seta">→</span>
+                    <span class="num">58</span>
+                    <span class="seta">→</span>
+                    <span class="num">91</span>
+                </div>
+
+                <div class="ordenacao-exemplo" style="background:#f0f0f0;">
+                    <span style="font-weight:600;">Decrescente:</span>
+                    <span class="num">91</span>
+                    <span class="seta">→</span>
+                    <span class="num">58</span>
+                    <span class="seta">→</span>
+                    <span class="num">47</span>
+                    <span class="seta">→</span>
+                    <span class="num">35</span>
+                    <span class="seta">→</span>
+                    <span class="num">12</span>
+                </div>
+
+                <p><strong>Passos para ordenar:</strong></p>
+                <ol>
+                    <li>Compare todos os números usando as regras de comparação.</li>
+                    <li>Identifique o menor e o maior.</li>
+                    <li>Coloque os números em sequência, do menor para o maior (crescente) ou do maior para o menor (decrescente).</li>
+                </ol>
+
+                <div class="dica-box">
+                    💡 <strong>Dica:</strong> Use a reta numérica para visualizar a ordem! Os números à esquerda são menores, os à direita são maiores.
+                </div>
+
+                <div class="highlight-box" style="margin-top:0.8rem;">
+                    <strong>Exemplo prático:</strong> Ordene os números <strong>23, 8, 45, 12, 7</strong> em ordem crescente.
+                    <span class="exemplo">7 → 8 → 12 → 23 → 45</span>
+                </div>
+            </div>
+
+            <footer>
+                ✦ Matemática · 6º ano · Sistema Decimal · Teoria ✦
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Função para imprimir
+        function imprimirPagina() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Exercícios · Sistemas de Numeração · 6º ano</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f4f9;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        .paper {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 30, 0.25);
+            padding: 2.5rem 2.8rem;
+            transition: 0.2s;
+        }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #0a4b7a;
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0a2b44;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #d4e2f0;
+            color: #0a3b5e;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #0a4b7a;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.8rem;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: #083a5e;
+            transform: scale(1.02);
+        }
+
+        .btn-gabarito {
+            background: #1a7a4b;
+        }
+
+        .btn-gabarito:hover {
+            background: #0f5f3a;
+        }
+
+        .btn-gabarito.ativo {
+            background: #c0392b;
+        }
+
+        .btn-gabarito.ativo:hover {
+            background: #a93226;
+        }
+
+        .info-exercicios {
+            background: #eef6fc;
+            padding: 1rem 1.8rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .info-exercicios span {
+            font-size: 1.05rem;
+            color: #1a2f40;
+        }
+
+        .info-exercicios .badge {
+            background: #0a4b7a;
+            color: white;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Lista de exercícios */
+        .exercicios-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .exercicio-item {
+            background: #fafcff;
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
+            border: 1px solid #e9edf4;
+            transition: 0.1s;
+            break-inside: avoid;
+        }
+
+        .exercicio-item:hover {
+            border-color: #b6d0e6;
+        }
+
+        .exercicio-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.6rem;
+        }
+
+        .exercicio-num {
+            background: #0a4b7a;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .exercicio-enunciado {
+            font-size: 1.08rem;
+            line-height: 1.6;
+            color: #1a2f40;
+            padding-left: 2px;
+        }
+
+        .exercicio-enunciado strong {
+            color: #0a3b5e;
+        }
+
+        .espaco-resposta {
+            margin-top: 0.8rem;
+            padding: 0.6rem 0 0.6rem 0;
+            border-top: 1px dashed #d2dce8;
+        }
+
+        .espaco-resposta .linha-resposta {
+            display: inline-block;
+            width: 200px;
+            border-bottom: 1px solid #b6cfe0;
+            margin: 0 6px;
+            min-height: 1.8rem;
+        }
+
+        .gabarito-resposta {
+            display: none;
+            background: #e8f5e9;
+            padding: 0.4rem 1.2rem;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: #1a5e2a;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .gabarito-resposta.visivel {
+            display: block;
+        }
+
+        .gabarito-resposta .label {
+            font-weight: 400;
+            color: #2e4a3a;
+            margin-right: 6px;
+        }
+
+        /* Rodapé */
+        footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #4b637a;
+            border-top: 1px solid #d2dce8;
+            padding-top: 1.5rem;
+        }
+
+        /* Impressão */
+        @media print {
+            body {
+                background: white;
+                padding: 0.3cm;
+                margin: 0;
+            }
+            .paper {
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0.3cm 0.6cm;
+                max-width: 100%;
+            }
+            .header-actions .btn {
+                display: none !important;
+            }
+            .exercicio-item {
+                border: 1px solid #ccc;
+                break-inside: avoid;
+                page-break-inside: avoid;
+                background: white;
+            }
+            .exercicio-item:hover {
+                border-color: #ccc;
+            }
+            .info-exercicios {
+                background: #f0f6fc;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .exercicio-num {
+                background: #0a4b7a !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .gabarito-resposta {
+                display: block !important;
+                background: #f0faf0 !important;
+                border-left: 3px solid #2e7d32 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .gabarito-resposta .label {
+                font-weight: 600;
+            }
+            .espaco-resposta .linha-resposta {
+                border-bottom: 1px solid #888;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .paper {
+                padding: 1.2rem;
+            }
+            .header {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.8rem;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+                flex-wrap: wrap;
+            }
+            .info-exercicios {
+                flex-direction: column;
+                align-items: start;
+                gap: 0.5rem;
+            }
+            .exercicio-item {
+                padding: 1rem;
+            }
+            .exercicio-enunciado {
+                font-size: 1rem;
+            }
+            .espaco-resposta .linha-resposta {
+                width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper" id="conteudoParaImprimir">
+        <!-- Cabeçalho -->
+        <div class="header">
+            <h1>
+                📝 Lista de Exercícios
+                <small>6º ano</small>
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-gabarito" id="toggleGabaritoBtn" onclick="toggleGabarito()">
+                    📖 Ver Gabarito
+                </button>
+                <button class="btn" onclick="imprimirPagina()">
+                    🖨️ Imprimir A4
+                </button>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="info-exercicios">
+            <span>🧮 <strong>Sistemas de Numeração</strong> — Binário, Romano, Maia, Babilônico e Decimal</span>
+            <span class="badge">10 exercícios</span>
+        </div>
+
+        <!-- Lista de exercícios -->
+        <div class="exercicios-lista" id="exerciciosLista">
+            <!-- Exercício 1 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">1</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Binário:</strong> Converta o número binário <strong>1101₂</strong> para o sistema decimal.
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="13">
+                        <span class="label">✅ Gabarito:</span> 1101₂ = 1×8 + 1×4 + 0×2 + 1×1 = <strong>13</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 2 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">2</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Romano:</strong> Escreva o número <strong>47</strong> em algarismos romanos.
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="XLVII">
+                        <span class="label">✅ Gabarito:</span> 47 = <strong>XLVII</strong> (XL = 40, VII = 7)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 3 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">3</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Maia:</strong> No sistema maia, um ponto vale 1 e um traço vale 5. Como se representa o número <strong>12</strong>?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="•• — (2 pontos + 2 traços)">
+                        <span class="label">✅ Gabarito:</span> 12 = 2 traços (10) + 2 pontos (2) → <strong>•• —</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 4 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">4</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Babilônico:</strong> Qual é o valor decimal do número babilônico representado por <strong>2,15</strong> (base 60)?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="135">
+                        <span class="label">✅ Gabarito:</span> 2×60 + 15 = <strong>135</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 5 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">5</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Decimal:</strong> Decomponha o número <strong>5.382</strong> em suas ordens (milhar, centena, dezena, unidade).
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta" style="width:280px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="5×1000 + 3×100 + 8×10 + 2×1">
+                        <span class="label">✅ Gabarito:</span> <strong>5×1000 + 3×100 + 8×10 + 2×1</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 6 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">6</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Binário:</strong> Qual é o valor em binário do número decimal <strong>21</strong>?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="10101₂">
+                        <span class="label">✅ Gabarito:</span> 21 = 16 + 4 + 1 = <strong>10101₂</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 7 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">7</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Romano:</strong> Qual é o valor decimal do número romano <strong>MCMXC</strong>?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="1990">
+                        <span class="label">✅ Gabarito:</span> MCMXC = 1000 + (1000-100) + (100-10) = <strong>1990</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 8 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">8</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Maia:</strong> Se um número maia é representado por <strong>— •••</strong> (traço + 3 pontos), qual é o seu valor?
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="8">
+                        <span class="label">✅ Gabarito:</span> Traço = 5, pontos = 3 → 5 + 3 = <strong>8</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 9 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">9</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Babilônico:</strong> Converta o número decimal <strong>75</strong> para a notação babilônica (base 60).
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta"></span></span>
+                    <div class="gabarito-resposta" data-resposta="1,15">
+                        <span class="label">✅ Gabarito:</span> 75 = 1×60 + 15 → <strong>1,15</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 10 -->
+            <div class="exercicio-item">
+                <div class="exercicio-header">
+                    <div class="exercicio-num">10</div>
+                    <div class="exercicio-enunciado">
+                        <strong>Decimal:</strong> Escreva o número <strong>3.047</strong> por extenso (por exemplo: três mil e quarenta e sete).
+                    </div>
+                </div>
+                <div class="espaco-resposta">
+                    <span>Resposta: <span class="linha-resposta" style="width:300px;"></span></span>
+                    <div class="gabarito-resposta" data-resposta="Três mil e quarenta e sete">
+                        <span class="label">✅ Gabarito:</span> <strong>Três mil e quarenta e sete</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            ✦ Matemática · 6º ano · Sistemas de Numeração · Lista de Exercícios ✦
+        </footer>
+    </div>
+
+    <script>
+        // Função para imprimir
+        function imprimirPagina() {
+            window.print();
+        }
+
+        // Toggle do gabarito
+        let gabaritoVisivel = false;
+
+        function toggleGabarito() {
+            gabaritoVisivel = !gabaritoVisivel;
+            const respostas = document.querySelectorAll('.gabarito-resposta');
+            const btn = document.getElementById('toggleGabaritoBtn');
+
+            respostas.forEach(el => {
+                if (gabaritoVisivel) {
+                    el.classList.add('visivel');
+                } else {
+                    el.classList.remove('visivel');
+                }
+            });
+
+            if (gabaritoVisivel) {
+                btn.textContent = '🙈 Ocultar Gabarito';
+                btn.classList.add('ativo');
+            } else {
+                btn.textContent = '📖 Ver Gabarito';
+                btn.classList.remove('ativo');
+            }
+        }
+
+        // Inicializa com gabarito oculto (para impressão, será visível via CSS @media print)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Garante que o gabarito comece oculto na tela
+            const respostas = document.querySelectorAll('.gabarito-resposta');
+            respostas.forEach(el => el.classList.remove('visivel'));
+        });
+    </script>
+</body>
+</html>
